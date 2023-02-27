@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Model
 
+
 # Create your models here.
 class Recipe_Search(models.Model):
     Recipe_Name = models.CharField(max_length=50)
@@ -12,3 +13,10 @@ class Recipe_Search(models.Model):
     Calories=models.IntegerField()
     Time=models.IntegerField()
     
+class User(models.Model):
+    name=models.CharField(max_length=50)
+    email=models.EmailField(max_length=254)
+    password=models.CharField(max_length=50)
+    like_recipe=models.URLField(max_length=200)
+    experience=models.CharField(max_length=500)
+    calories_count=models.IntegerField()
