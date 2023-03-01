@@ -10,16 +10,21 @@
   </head>
   <body>
     {% include 'nav.html' %}
-    <p>Search Placeholder</p>
-    <div class="input-group">
-      <input
-        type="search"
-        class="form-control rounded"
-        placeholder="Search for a recipe"
-        aria-label="Search"
-        aria-describedby="search-addon"
-      />
-      <a type="button" class="btn btn-outline-primary">search</a>
-    </div>
+    <form method="post">
+      {%csrf_token%}
+      <table>
+        {{ form_data.as_table }}
+        <tr>
+          <td>
+            <input type="Submit" class="btn btn-info" value="Search"\>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <ul>
+      <li>{{ Recipe_Name }}</li>
+      <li>{{Ingrediants}}</li>
+      <li>{{Meal_Type}}</li>
+    </ul>
   </body>
 </html>
