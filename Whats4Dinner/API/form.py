@@ -1,6 +1,7 @@
 from django import forms
 from API.models import Recipe_Search
 from API.models import MEAL_TYPE, DIET_TYPE, HEALTH_TYPE
+from django.contrib.auth.models import User
 
 class RecipeSearchForm(forms.Form):
     Recipe_Name = forms.CharField(widget=forms.TextInput())
@@ -15,3 +16,16 @@ class RecipeSearchForm(forms.Form):
     #     model = Recipe_Search
     #     fields = {'Recipe_Name','Ingrediants','Meal_Type','Health_type',
     #               'Diet', 'Calories', 'Time'}
+
+
+class SignUpForm(forms.ModelForm):
+    class Meta():
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'email', 'password')
+        help_texts = {
+            'username': None
+            }
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput())
