@@ -1,14 +1,18 @@
+import urllib.parse
+
+from decouple import config
 from django.shortcuts import render
 from API.form import RecipeSearchForm
-
 
 # Create your views here.
 
 def home(request):
     return render(request, "API/home.html")
 
+
 def about(request):
     return render(request, "API/about.html")
+
 
 def search(request):
     if (request.method== "POST"):
