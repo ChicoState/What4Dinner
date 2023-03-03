@@ -1,6 +1,7 @@
 from django import forms
 from API.models import Recipe_Search
 from API.models import MEAL_TYPE, DIET_TYPE
+from django.contrib.auth.models import User
 
 class RecipeSearchForm(forms.Form):
     Recipe_Name = forms.CharField(widget=forms.TextInput())
