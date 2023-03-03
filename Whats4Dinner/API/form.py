@@ -1,16 +1,16 @@
 from django import forms
 from API.models import Recipe_Search
-from API.models import MEAL_TYPE, DIET_TYPE
+from API.models import MEAL_TYPE, DIET_TYPE, HEALTH_TYPE
 from django.contrib.auth.models import User
 
 class RecipeSearchForm(forms.Form):
     Recipe_Name = forms.CharField(widget=forms.TextInput())
     Ingrediants=forms.CharField(widget=forms.TextInput())
     Meal_Type=forms.CharField(label= 'Meal Type', widget= forms.Select(choices=MEAL_TYPE))
-    # Health_type=forms.CharField(max_length=40)
+    Health_Type=forms.CharField(label= 'Health Type', widget= forms.Select(choices=HEALTH_TYPE))
     Diet=forms.CharField(label= 'Diet Type', widget=forms.Select(choices=DIET_TYPE))
-    Calories=forms.IntegerField(widget=forms.NumberInput())
-    Time=forms.IntegerField(widget=forms.NumberInput())
+    Calorie_Range=forms.CharField(widget=forms.TextInput())
+    Max_Amount_Of_Time=forms.IntegerField(widget=forms.NumberInput())
 
     # class Meta():
     #     model = Recipe_Search

@@ -57,24 +57,25 @@ def search_api(request):
         if form.is_valid():
             text = form.cleaned_data['Recipe_Name']
             text2 = form.cleaned_data['Ingrediants']
-            text3 = form.cleaned_data['Meal_Type']
+            text3 = form.cleaned_data['Meal_Type']   
             text4 = form.cleaned_data['Diet']
             text5 = form.cleaned_data['Calories']
             text6 = form.cleaned_data['Time']
-            print(text)
-            print(text2)
-            print(text3)
+            print(text)  
+            print(text2)  
+            print(text3)  
             print(text4)
-            print(text5)
+            print(text5)  
             print(text6)
         context = {
             "form_data": RecipeSearchForm,
             "Recipe_Name": text,
             "Ingrediants": text2,
             "Meal_Type": text3,
-            "Diet": text4,
-            "Calories": text5,
-            "Time": text6
+            "Health_Type": text4,
+            "Diet": text5,
+            "Calories": text6,
+            "Time": text7,
         }
         return render(request, "API/search.html", context)
 
