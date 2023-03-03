@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    {% csrf_token %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whats 4 Dinner</title>
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+    {% include 'nav.html' %}
+    <div class="container">
+      <div class="starter-template">
+        <h1>Welcome <b>{{user.username}}!</b></h1>
+        <p class="lead">User's Home Page</p>
+      </div>
+    </div>
+    <!-- /.container -->
+  </body>
+</html>

@@ -22,4 +22,9 @@ urlpatterns = [
     path('', api_views.home),
     path('about/', api_views.about),
     path('search/', api_views.search),
+    path('signup/', api_views.signup),
+    path('login/', api_views.user_login),
+    path('userprofile/', api_views.userprofile),
+    path('logout/', api_views.user_logout),
+
 ]
