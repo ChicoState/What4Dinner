@@ -16,19 +16,33 @@
         {{ form_data.as_table }}
         <tr>
           <td>
-            <input type="Submit" class="btn btn-info" value="Search"\>
+            <input type="Submit" class="btn btn-info" value="Search" \ />
           </td>
         </tr>
       </table>
     </form>
-    <ul>
-      <li>{{ Recipe_Name }}</li>
-      <li>{{Ingrediants}}</li>
-      <li>{{Meal_Type}}</li> 
-      <li>{{Health_Type}}</li>
-      <li>{{Diet}}</li>
-      <li>{{Calories}}</li>
-      <li>{{Time}}</li>
-    </ul>
+    <h3 class="text-center">Found {{ num_results }} results!</h3>
+    <table>
+      <tr>
+        <th>Recipe Name</th>
+        <th>Diet Labels</th>
+        <th>Health Labels</th>
+        <th>Cautions</th>
+        <th>Ingredients</th>
+        <th>Meal Type</th>
+        <th>Dish Type</th>
+      </tr>
+      {% for item in parsed_data %}
+      <tr>
+        <td>{{ item.label }}</td>
+        <td>{{ item.dietLabels }}</td>
+        <td>{{ item.healthLabels }}</td>
+        <td>{{ item.cautions }}</td>
+        <td>{{ item.ingredients }}</td>
+        <td>{{ item.mealType }}</td>
+        <td>{{ item.dishType }}</td>
+      </tr>
+      {% endfor %}
+    </table>
   </body>
 </html>
