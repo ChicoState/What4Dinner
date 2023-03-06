@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from API.form import RecipeSearchForm, SignUpForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
 #from django.contrib.auth.forms import SignUp
 
 # Create your views here.
@@ -57,15 +58,15 @@ def search_api(request):
         if form.is_valid():
             text = form.cleaned_data['Recipe_Name']
             text2 = form.cleaned_data['Ingrediants']
-            text3 = form.cleaned_data['Meal_Type']   
+            text3 = form.cleaned_data['Meal_Type']
             text4 = form.cleaned_data['Diet']
             text5 = form.cleaned_data['Calories']
             text6 = form.cleaned_data['Time']
-            print(text)  
-            print(text2)  
-            print(text3)  
+            print(text)
+            print(text2)
+            print(text3)
             print(text4)
-            print(text5)  
+            print(text5)
             print(text6)
         context = {
             "form_data": RecipeSearchForm,
@@ -92,7 +93,7 @@ def signup(request):
             user = signup_form.save()
             user.set_password(user.password)
             user.save()
-            return redirect("/")
+            return render(request, "API/login.html")
         else:
             page_data = { "signup_form": signup_form }
             return render(request, "API/signup.html", page_data)
@@ -112,10 +113,8 @@ def user_login(request):
                     login(request,user)
                     return redirect(userprofile)
                 else:
-                    return HttpResponseRedirect("Your account is not setup.")
+                    return HttpResponseRedirect("There is no account associated with that username.")
             else:
-                print("Someone tried to login and failed.")
-                print("They used username: {} and password: {}".format(username,password))
                 return render(request, 'API/login.html', {"login_form": LoginForm})
         else:
             return render(request, "API/login.html", {"login_form": LoginForm})
