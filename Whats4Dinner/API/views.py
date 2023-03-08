@@ -64,7 +64,7 @@ def signup(request):
             user = signup_form.save()
             user.set_password(user.password)
             user.save()
-            return redirect("/")
+            return render(request, "API/login.html")
         else:
             page_data = {"signup_form": signup_form}
             return render(request, "API/signup.html", page_data)
@@ -86,7 +86,7 @@ def user_login(request):
                     login(request, user)
                     return redirect(userprofile)
                 else:
-                    return HttpResponseRedirect("Your account is not setup.")
+                    return HttpResponseRedirect("There is no account associated with that username.")
             else:
                 print("Someone tried to login and failed.")
                 print("They used username: {} and password: {}".format(
