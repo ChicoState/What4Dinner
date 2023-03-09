@@ -1,223 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% load static %}
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Us</title>
-    {% include 'bootstrap.html' %}
-  </head>
-  <body>
-    {% include 'nav.html' %}
-    <h1 class="text-center">Meet the Development Team</h1>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img
-              src="{%static 'Default_pfp.png'%}"
-              class="card-img-top"
-              alt="default profile picture"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Alex Rosete</h5>
-              <p class="card-text">
-                My name is Alexander Rosete and I am part of the software
-                engineer team. I am a CINS(Computer Information Systems Major)
-                and minoring in business. Technology has always been an
-                interesting topic to me and I want to learn more everyday. I am
-                currently studying for the Security+ cert pursuing in
-                Cybersecurity Internship/Job.
-              </p>
-              <a
-                href="https://www.linkedin.com/in/alexander-rosete-675873207/"
-                target="_blank"
-                class="btn btn-primary"
-                >Linkedin</a
-              >
-              <a
-                href="https://github.com/arose510"
-                target="_blank"
-                class="btn btn-secondary"
-                >GitHub</a
-              >
-            </div>
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us</title>
+  {% include 'head.html' %}
+</head>
+
+<body>
+  {% include 'nav.html' %}
+  <h1 class="text-center mt-4">
+    Meet the Development Team
+  </h1>
+  <div class="container px-lg-3">
+    <div class="row row-cols-md-3 row-cols-1 mx-lg-n3">
+      <div class="col py-3 px-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <h4 class="card-title text-center">Alex Rosete</h4>
+            <h5 class="card-subtitle text-center">UX Team</h5>
           </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img
-              src="{%static 'Default_pfp.png'%}"
-              class="card-img-top"
-              alt="default profile picture"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Jake West</h5>
-              <p class="card-text">
-                Hello! I'm Jake West and I'm part of the Software Development
-                team for this project. I'm a senior at Chico State graduating in
-                May of 2023. I enjoy collaborating with my fellow colleagues and
-                working towards providing a great service for users. In my free
-                time I enjoy going to concerts and exploring California.
-              </p>
-              <a
-                href="https://www.linkedin.com/in/jacob-s-west/"
-                target="_blank"
-                class="btn btn-primary"
-                >Linkedin</a
-              >
-              <a
-                href="https://github.com/jakewest35"
-                target="_blank"
-                class="btn btn-secondary"
-                >GitHub</a
-              >
-            </div>
+          <div class="card-body p-3">
+            <p class="card-text">
+              My name is Alexander Rosete and I am part of the software
+              engineer team. I am a CINS(Computer Information Systems Major)
+              and minoring in business. Technology has always been an
+              interesting topic to me and I want to learn more everyday. I am
+              currently studying for the Security+ cert pursuing in
+              Cybersecurity Internship/Job.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.linkedin.com/in/alexander-rosete-675873207/" target="_blank" class="btn btn-primary">
+              <i data-feather="linkedin"></i>
+              Linkedin
+            </a>
+            <a href="https://github.com/arose510" target="_blank" class="btn btn-secondary">
+              <i data-feather="github"></i>
+              GitHub
+            </a>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img
-              src="{%static 'Default_pfp.png'%}"
-              class="card-img-top"
-              alt="default profile picture"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Michael Saechao</h5>
-              <p class="card-text">
-                My name is Michael Saechao, I'm a member of the Software
-                Engineering team. I'm going into Chico State as senior as a
-                Computer Science major. I'm interested in learning how
-                computers, software works and hoping to develops some great
-                skills that I can use later on in life. My hobbies are working
-                out at the gym, fishing, and playing video games.
-              </p>
-              <a
-                href="https://www.linkedin.com/in/michael-saechao-0b5193180/"
-                target="_blank"
-                class="btn btn-primary"
-                >Linkedin</a
-              >
-              <a
-                href="https://github.com/Michael-Saechao"
-                target="_blank"
-                class="btn btn-secondary"
-                >GitHub</a
-              >
-            </div>
+      <div class="col py-3 px-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <h4 class="card-title text-center">Jake West</h4>
+            <h5 class="card-subtitle text-center">UX Team</h5>
           </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img
-              src="{%static 'Default_pfp.png'%}"
-              class="card-img-top"
-              alt="default profie picture"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Pranav Gopalakumaran</h5>
-              <p class="card-text">
-                My name is Pranav Gopalakumaran, I am a Computer Science Major
-                and Junior year at Chico State University at the time of
-                development. I am part of the Backend team in designing this
-                website. I'm an enthusiastic learner and always working on
-                developing my skills.
-              </p>
-              <a href="#" target="_blank" class="btn btn-primary">Linkedin</a>
-              <a
-                href="https://github.com/PranavGopal999"
-                target="_blank"
-                class="btn btn-secondary"
-                >GitHub</a
-              >
-            </div>
+          <div class="card-body">
+            <p class="card-text">
+              Hello! I'm Jake West and I'm part of the Software Development
+              team for this project. I'm a senior at Chico State graduating in
+              May of 2023. I enjoy collaborating with my fellow colleagues and
+              working towards providing a great service for users. In my free
+              time I enjoy going to concerts and exploring California.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.linkedin.com/in/jacob-s-west/" target="_blank" class="btn btn-primary">
+              <i data-feather="linkedin"></i>
+              Linkedin
+            </a>
+            <a href="https://github.com/jakewest35" target="_blank" class="btn btn-secondary">
+              <i data-feather="github"></i>
+              GitHub
+            </a>
           </div>
         </div>
       </div>
-    </div>
-    <br />
-    <h1 class="text-center">Meet the UX Team</h1>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img
-              src="{%static 'Default_pfp.png'%}"
-              class="card-img-top"
-              alt="default profile picture"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Bryce Ingersoll</h5>
-              <p class="card-text">
-                My name is Bryce Ingersoll and I'm interested in working with
-                computers and their real world applications. I am also
-                interested in the design aspect of these applications along with
-                making them user friendly and intuitive.
-              </p>
-              <a
-                href="https://github.com/UsabilityEngineering/ux-portfolio-bmxbrick"
-                target="_blank"
-                class="btn btn-secondary"
-                >GitHub</a
-              >
-            </div>
+      <div class="col py-3 px-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <h4 class="card-title text-center">Michael Saechao</h4>
+            <h5 class="card-subtitle text-center">UX Team</h5>
           </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img
-              src="{%static 'Default_pfp.png'%}"
-              class="card-img-top"
-              alt="default profile picture"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Jonathan Hawkins</h5>
-              <p class="card-text">
-                Hello! My name is Jonathan Hawkins and I am part of the UX team
-                for the What's for Dinner project. I am a Computer Science Major
-                at Chico State currently and I'm looking forward to using my
-                skills here in the future. Outside school I'm an avid gamer and
-                I love to go hiking from time to time.
-              </p>
-              <a
-                href="https://github.com/UsabilityEngineering/ux-portfolio-JHawkins7358"
-                target="_blank"
-                class="btn btn-secondary"
-                >GitHub</a
-              >
-            </div>
+          <div class="card-body">
+            <p class="card-text">
+              My name is Michael Saechao, I'm a member of the Software
+              Engineering team. I'm going into Chico State as senior as a
+              Computer Science major. I'm interested in learning how
+              computers, software works and hoping to develops some great
+              skills that I can use later on in life. My hobbies are working
+              out at the gym, fishing, and playing video games.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="https://www.linkedin.com/in/michael-saechao-0b5193180/" target="_blank" class="btn btn-primary">
+              <i data-feather="linkedin"></i>
+              Linkedin
+            </a>
+            <a href="https://github.com/Michael-Saechao" target="_blank" class="btn btn-secondary">
+              <i data-feather="github"></i>
+              GitHub
+            </a>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img
-              src="{%static 'Default_pfp.png'%}"
-              class="card-img-top"
-              alt="default profile picture"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Willow Brockhoff</h5>
-              <p class="card-text">
-                Hi, my name is Willow Brockhoff! I am on the UX team for Whats
-                for Dinner and am a Computer Science major at Chico State. I
-                intend to enter the tech field once I graduate college and in my
-                free time I enjoy rock climbing and crocheting!
-              </p>
-              <a
-                href="https://github.com/UsabilityEngineering/ux-portfolio-willowbrockhoff"
-                target="_blank"
-                class="btn btn-secondary"
-                >GitHub</a
-              >
-            </div>
+      <div class="col py-3 px-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <h4 class="card-title text-center">Pranav Gopalakumaran</h4>
+            <h5 class="card-subtitle text-center">UX Team</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              My name is Pranav Gopalakumaran, I am a Computer Science Major
+              and Junior year at Chico State University at the time of
+              development. I am part of the Backend team in designing this
+              website. I'm an enthusiastic learner and always working on
+              developing my skills.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/PranavGopal999" target="_blank" class="btn btn-secondary">
+              <i data-feather="github"></i>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col py-3 px-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <h4 class="card-title text-center">Bryce Ingersoll</h4>
+            <h5 class="card-subtitle text-center">UX Team</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              My name is Bryce Ingersoll and I'm interested in working with
+              computers and their real world applications. I am also
+              interested in the design aspect of these applications along with
+              making them user friendly and intuitive.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/UsabilityEngineering/ux-portfolio-bmxbrick" target="_blank"
+              class="btn btn-secondary">
+              <i data-feather="github"></i>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col py-3 px-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <h4 class="card-title text-center">Jonathan Hawkins</h4>
+            <h5 class="card-subtitle text-center">UX Team</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              Hello! My name is Jonathan Hawkins and I am part of the UX team
+              for the What's for Dinner project. I am a Computer Science Major
+              at Chico State currently and I'm looking forward to using my
+              skills here in the future. Outside school I'm an avid gamer and
+              I love to go hiking from time to time.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="https://github.com/UsabilityEngineering/ux-portfolio-JHawkins7358" target="_blank"
+              class="btn btn-secondary">
+              <i data-feather="github"></i>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col py-3 px-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <h4 class="card-title text-center">Willow Brockhoff</h4>
+            <h5 class="card-subtitle text-center">UX Team</h5>
+          </div>
+          <div class="card-body p-3">
+            <p class="card-text">
+              Hi, my name is Willow Brockhoff! I am on the UX team for Whats
+              for Dinner and am a Computer Science major at Chico State. I
+              intend to enter the tech field once I graduate college and in my
+              free time I enjoy rock climbing and crocheting!
+            </p>
+            <a href="https://github.com/UsabilityEngineering/ux-portfolio-willowbrockhoff" target="_blank"
+              class="btn btn-secondary"><i data-feather="github"></i> GitHub</a>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
