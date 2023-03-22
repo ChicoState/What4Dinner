@@ -25,24 +25,24 @@
     <h3 class="text-center">Found {{ num_results }} results!</h3>
     <table>
       <tr>
-        <th>Recipe Name</th>
-        <th>Diet Labels</th>
-        <th>Health Labels</th>
-        <th>Cautions</th>
-        <th>Ingredients</th>
-        <th>Meal Type</th>
-        <th>Dish Type</th>
-        <th>Link to Instructions</th>
+        <th class="text-center">Recipe Name</th>
+        <th class="text-center">Diet Labels</th>
+        <th class="text-center">Health Labels</th>
+        <th class="text-center">Cautions</th>
+        <th class="text-center">Ingredients</th>
+        <th class="text-center">Meal Type</th>
+        <th class="text-center">Dish Type</th>
+        <th class="text-center">Link to Instructions</th>
       </tr>
       {% for item in parsed_data %}
       <tr>
-        <td>{{ item.label }}</td>
-        <td>{{ item.dietLabels }}</td>
-        <td>{{ item.healthLabels }}</td>
-        <td>{{ item.cautions }}</td>
-        <td>{{ item.ingredients }}</td>
-        <td>{{ item.mealType }}</td>
-        <td>{{ item.dishType }}</td>
+        <td class="text-center">{{ item.label }}</td>
+        <td class="text-center">{{ item.dietLabels }}</td>
+        <td class="text-center">{{ item.healthLabels }}</td>
+        <td class="text-center">{{ item.cautions }}</td>
+        <td class="text-center">{{ item.ingredients }}</td>
+        <td class="text-center">{{ item.mealType }}</td>
+        <td class="text-center">{{ item.dishType }}</td>
         <td>
           <a target="_blank" href="{{ item.instructionLink }}"
             >Instructions Link</a
