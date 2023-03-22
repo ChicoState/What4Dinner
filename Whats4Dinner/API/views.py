@@ -44,16 +44,21 @@ def search(request):
             time = form.cleaned_data['Max_Amount_Of_Time']
             res = get_api_data(query=recipe_name, num_of_ingredients=num_of_ingredients, diet_type=diet,
                                health_type=health_type, meal_type=meal_type, calories=calories, time=time)
-        parsed_data = parse_api_data(res.json())
-        # Sorts the recipes by recipe name
-        parsed_data.sort(key=lambda x: x['label'], reverse=False)
-        print(parsed_data)
-        context = {
-            "form_data": RecipeSearchForm,
-            "num_results": len(parsed_data),
-            "parsed_data": parsed_data,
-        }
-        return render(request, "API/search.html", context)
+            parsed_data = parse_api_data(res.json())
+            # Sorts the recipes by recipe name
+            parsed_data.sort(key=lambda x: x['label'], reverse=False)
+            print(parsed_data)
+            context = {
+                "form_data": RecipeSearchForm,
+                "num_results": len(parsed_data),
+                "parsed_data": parsed_data,
+            }
+            return render(request, "API/search.html", context)
+        else:
+            context = {
+                "form_data": RecipeSearchForm
+            }
+            return render(request, "API/search.html", context)
 
     else:
         context = {

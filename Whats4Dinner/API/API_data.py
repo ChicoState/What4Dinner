@@ -18,7 +18,7 @@ def get_api_data(query, num_of_ingredients, diet_type, health_type, meal_type, c
     try:
         res = requests.get(url)
     except:
-        print("ping_api: Unable to get recipe data")
+        print("get_api_data: Unable to get recipe data")
     return res
 
 
@@ -30,17 +30,17 @@ def generateURL(query, num_of_ingredients, diet_type, health_type, meal_type, ca
     domain = "https://api.edamam.com/api/recipes/v2?type=public"
     query_string = f"&q={query}&app_id={app_id}&app_key={api_key}"
     if (num_of_ingredients != ""):
-        query_string = query_string + "&ingr={num_of_ingredients}"
+        query_string = query_string + f"&ingr={num_of_ingredients}"
     if (diet_type != ""):
-        query_string = query_string + "&diet={diet_type}"
+        query_string = query_string + f"&diet={diet_type}"
     if (health_type != ""):
-        query_string = query_string + "&health={health_type}"
+        query_string = query_string + f"&health={health_type}"
     if (meal_type != ""):
-        query_string = query_string + "&mealType={meal_type}"
+        query_string = query_string + f"&mealType={meal_type}"
     if (calories != ""):
-        query_string = query_string + "&calories={calories}"
+        query_string = query_string + f"&calories={calories}"
     if (time != None):
-        query_string = query_string + "&time={time}"
+        query_string = query_string + f"&time={time}"
 
     encoded_query_string = format_url(query_string)
     url = domain + encoded_query_string
@@ -59,10 +59,15 @@ def parse_api_data(data):
         tmp["cautions"] = item["recipe"]["cautions"]
         tmp["ingredients"] = item["recipe"]["ingredientLines"]
         tmp["mealType"] = item["recipe"]["mealType"]
-        tmp["dishType"] = item["recipe"]["dishType"]
+
+        # Some search queries return results that do not contain a "dishType" key,
+        # If that happens, just set the key to "N/A" so it can still be rendered correctly on the front end
+        try:
+            tmp["dishType"] = item["recipe"]["dishType"]
+        except:
+            tmp["dishType"] = "N/A"
         tmp["instructionLink"] = item["recipe"]["url"]
         parsed_data.append(tmp)
-    print(parsed_data)
     return parsed_data
 
 
@@ -76,7 +81,7 @@ def main():
     time = "20"
     result = get_api_data(query, num_of_ingrediants,
                           diet_type, health_type, meal_type, calories, time)
-    print(result)
+    print(result.text)
 
 
 if __name__ == '__main__':
