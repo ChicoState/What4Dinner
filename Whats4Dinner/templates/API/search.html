@@ -21,6 +21,7 @@
         </tr>
       </table>
     </form>
+    {% if num_results %}
     <h3 class="text-center">Found {{ num_results }} results!</h3>
     <table>
       <tr>
@@ -31,6 +32,7 @@
         <th>Ingredients</th>
         <th>Meal Type</th>
         <th>Dish Type</th>
+        <th>Link to Instructions</th>
       </tr>
       {% for item in parsed_data %}
       <tr>
@@ -41,8 +43,14 @@
         <td>{{ item.ingredients }}</td>
         <td>{{ item.mealType }}</td>
         <td>{{ item.dishType }}</td>
+        <td>
+          <a target="_blank" href="{{ item.instructionLink }}"
+            >Instructions Link</a
+          >
+        </td>
       </tr>
       {% endfor %}
     </table>
+    {% endif %}
   </body>
 </html>
