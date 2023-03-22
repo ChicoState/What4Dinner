@@ -1,6 +1,7 @@
 from API.form import LoginForm, RecipeSearchForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from .API_data import get_api_data, parse_api_data
@@ -29,6 +30,7 @@ def userprofile(request):
     return render(request, "API/userprofile.html")
 
 
+@login_required(login_url='/login/')
 def search(request):
     if (request.method == "POST"):
         form = RecipeSearchForm(request.POST)
@@ -43,6 +45,9 @@ def search(request):
             res = get_api_data(query=recipe_name, num_of_ingredients=num_of_ingredients, diet_type=diet,
                                health_type=health_type, meal_type=meal_type, calories=calories, time=time)
         parsed_data = parse_api_data(res.json())
+        # Sorts the recipes by recipe name
+        parsed_data.sort(key=lambda x: x['label'], reverse=False)
+        print(parsed_data)
         context = {
             "form_data": RecipeSearchForm,
             "num_results": len(parsed_data),
