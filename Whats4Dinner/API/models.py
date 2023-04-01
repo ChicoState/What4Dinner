@@ -69,7 +69,7 @@ class Recipe_Search(models.Model):
     Diet = models.CharField(choices=DIET_TYPE, max_length=40, null=True)
     Calories = models.CharField(max_length=50, null=True)
     Time = models.IntegerField(null=True)
-
+    shareable_link = models.URLField(max_length=200, unique=True)  # Added field for shareable link
 
 class User(models.Model):
     name = models.CharField(max_length=50)
