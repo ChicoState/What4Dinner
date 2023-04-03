@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search Recipes</title>
+    <style>
+      .search-results {
+        font-size: medium;
+      }
+    </style>
     {% include 'head.html' %}
   </head>
   <body>
@@ -36,7 +41,7 @@
         <th class="text-center">Shareable Link</th> <!-- Added column for shareable link-->
       </tr>
       {% for item in parsed_data %}
-      <tr>
+      <tr class="search-results">
         <td class="text-center">{{ item.label }}</td>
         <td class="text-center">{{ item.dietLabels }}</td>
         <td class="text-center">{{ item.healthLabels }}</td>
