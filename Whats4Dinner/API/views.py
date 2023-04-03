@@ -1,10 +1,13 @@
-from API.form import LoginForm, RecipeSearchForm, SignUpForm
+'''
+Views for each page.
+'''
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
-from .API_data import get_api_data, parse_api_data
+from API.api_data import get_api_data, parse_api_data
+from API.form import LoginForm, RecipeSearchForm, SignUpForm
 
 #from django.contrib.auth.forms import SignUp
 
@@ -13,26 +16,41 @@ from .API_data import get_api_data, parse_api_data
 
 @login_required(login_url='/login/')
 def user_logout(request):
+    '''
+    User logout action. Redirects user to home view.
+    '''
     logout(request)
     return redirect("/")
 
 
 def home(request):
+    '''
+    Homepage/default view.
+    '''
     return render(request, "API/home.html")
 
 
 def about(request):
+    '''
+    About page view
+    '''
     return render(request, "API/about.html")
 
 
 @login_required(login_url='/login/')
 def userprofile(request):
+    '''
+    User profile view
+    '''
     return render(request, "API/userprofile.html")
 
 
 @login_required(login_url='/login/')
 def search(request):
-    if (request.method == "POST"):
+    '''
+    Search page view. Provides recipe search functionality.
+    '''
+    if request.method == "POST":
         form = RecipeSearchForm(request.POST)
         if form.is_valid():
             recipe_name = form.cleaned_data['Recipe_Name']
@@ -42,8 +60,13 @@ def search(request):
             diet = form.cleaned_data['Diet']
             calories = form.cleaned_data['Calorie_Range']
             time = form.cleaned_data['Max_Amount_Of_Time']
-            res = get_api_data(query=recipe_name, num_of_ingredients=num_of_ingredients, diet_type=diet,
-                               health_type=health_type, meal_type=meal_type, calories=calories, time=time)
+            res = get_api_data(query=recipe_name,
+                               num_of_ingredients=num_of_ingredients,
+                               diet_type=diet,
+                               health_type=health_type,
+                               meal_type=meal_type,
+                               calories=calories,
+                               time=time)
             parsed_data = parse_api_data(res.json())
             # Sorts the recipes by recipe name
             parsed_data.sort(key=lambda x: x['label'], reverse=False)
@@ -54,23 +77,23 @@ def search(request):
                 "parsed_data": parsed_data,
             }
             return render(request, "API/search.html", context)
-        else:
-            context = {
-                "form_data": RecipeSearchForm
-            }
-            return render(request, "API/search.html", context)
-
-    else:
         context = {
             "form_data": RecipeSearchForm
         }
         return render(request, "API/search.html", context)
+    context = {
+        "form_data": RecipeSearchForm
+    }
+    return render(request, "API/search.html", context)
 
 
 def signup(request):
-    if (request.method == "POST"):
+    '''
+    User sign up page.
+    '''
+    if request.method == "POST":
         signup_form = SignUpForm(request.POST)
-        if (signup_form.is_valid()):
+        if signup_form.is_valid():
             user = signup_form.save()
             user.set_password(user.password)
             user.save()
@@ -78,14 +101,16 @@ def signup(request):
         else:
             page_data = {"signup_form": signup_form}
             return render(request, "API/signup.html", page_data)
-    else:
-        signup_form = SignUpForm()
-        page_data = {"signup_form": signup_form}
-        return render(request, "API/signup.html", page_data)
+    signup_form = SignUpForm()
+    page_data = {"signup_form": signup_form}
+    return render(request, "API/signup.html", page_data)
 
 
 def user_login(request):
-    if (request.method == 'POST'):
+    '''
+    User login page.
+    '''
+    if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = login_form.cleaned_data["username"]
@@ -96,11 +121,13 @@ def user_login(request):
                     login(request, user)
                     return redirect(userprofile)
                 else:
-                    return HttpResponseRedirect("There is no account associated with that username.")
+                    return \
+                        HttpResponseRedirect(
+                            "There is no account associated with that username.")
             else:
                 print("Someone tried to login and failed.")
-                print("They used username: {} and password: {}".format(
-                    username, password))
+                print(
+                    f"They used username: {username} and password: {password}")
                 return render(request, 'API/login.html', {"login_form": LoginForm})
         else:
             return render(request, "API/login.html", {"login_form": LoginForm})

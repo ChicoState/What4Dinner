@@ -1,3 +1,7 @@
+'''
+Created models for recipe and users.
+'''
+
 from django.db import models
 
 MEAL_TYPE = [
@@ -59,7 +63,10 @@ HEALTH_TYPE = [
 
 
 # Create your models here.
-class Recipe_Search(models.Model):
+class RecipeSearch(models.Model):
+    '''
+    Parameters for the Recipe search form.
+    '''
     Recipe_Name = models.CharField(max_length=50)
     Image = models.ImageField
     Ingrediants = models.CharField(max_length=300, null=True)
@@ -69,9 +76,14 @@ class Recipe_Search(models.Model):
     Diet = models.CharField(choices=DIET_TYPE, max_length=40, null=True)
     Calories = models.CharField(max_length=50, null=True)
     Time = models.IntegerField(null=True)
-    shareable_link = models.URLField(max_length=200, unique=True)  # Added field for shareable link
+    # Added field for shareable link
+    shareable_link = models.URLField(max_length=200, unique=True)
+
 
 class User(models.Model):
+    '''
+    Parameters for a specific user.
+    '''
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=50)
