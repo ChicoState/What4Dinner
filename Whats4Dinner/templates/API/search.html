@@ -38,7 +38,8 @@
         <th class="text-center">Meal Type</th>
         <th class="text-center">Dish Type</th>
         <th class="text-center">Link to Instructions</th>
-        <th class="text-center">Shareable Link</th> <!-- Added column for shareable link-->
+        <th class="text-center">Shareable Link</th>
+        <!-- Added column for shareable link-->
       </tr>
       {% for item in parsed_data %}
       <tr class="search-results">
@@ -54,10 +55,9 @@
             >Instructions Link</a
           >
         </td>
-        <td> <!-- Added cell for shareable link-->
-          <a target="_blank" href="{{ item.shareable_link }}"
-            >Shareable Link</a
-          >
+        <td>
+          <!-- Added cell for shareable link-->
+          <a target="_blank" href="{{ item.shareableLink }}">Shareable Link</a>
         </td>
       </tr>
       {% endfor %}

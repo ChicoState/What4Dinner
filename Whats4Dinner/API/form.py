@@ -4,7 +4,7 @@ Forms definitions for the project.
 from django import forms
 from django.contrib.auth.models import User
 
-from API.models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE
+from .models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE
 
 
 class RecipeSearchForm(forms.Form):

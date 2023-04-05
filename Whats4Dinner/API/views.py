@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
-from API.api_data import get_api_data, parse_api_data
-from API.form import LoginForm, RecipeSearchForm, SignUpForm
+from .api_data import get_api_data, parse_api_data
+from .form import LoginForm, RecipeSearchForm, SignUpForm
 
 #from django.contrib.auth.forms import SignUp
 
