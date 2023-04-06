@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-
+from django.contrib import messages
+from API.form import UpdateUserForm, UpdateProfileForm
 from .API_data import get_api_data, parse_api_data
 
 #from django.contrib.auth.forms import SignUp
@@ -28,6 +29,10 @@ def about(request):
 @login_required(login_url='/login/')
 def userprofile(request):
     return render(request, "API/userprofile.html")
+
+@login_required(login_url='/login/')
+def edit_profile(request):
+   return render(request, "API/editProfile.html")
 
 
 @login_required(login_url='/login/')
@@ -106,3 +111,22 @@ def user_login(request):
             return render(request, "API/login.html", {"login_form": LoginForm})
     else:
         return render(request, "API/login.html", {"login_form": LoginForm})
+
+
+
+@login_required(login_url='/login/')
+def profile(request):
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(userprofile)
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user)
+
+    return render(request, 'API/editProfile.html', {'user_form': user_form, 'profile_form': profile_form})
