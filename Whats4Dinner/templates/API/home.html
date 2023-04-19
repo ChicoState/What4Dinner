@@ -7,6 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Whats 4 Dinner</title>
     {% include 'head.html' %}
+    <style>
+      body {
+        background-image: url("{% static 'Cooking_Table.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow-y: scroll;
+        height: 100%;
+      }
+      h1 {
+        margin-top: 400px;
+        font-size: 72px;
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 2px 2px #000000;
+      }
+    </style>
   </head>
   <body>
     {% include 'nav.html' %}

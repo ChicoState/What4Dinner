@@ -6,51 +6,84 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search Recipes</title>
+    <!-- <style>
+      body {
+        background-image: url("{% static 'Pan.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow-y: scroll;
+        height: 100%;
+      }
+
+      .transparent {
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 15px;
+        border-radius: 5px;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    </style> -->
     {% include 'head.html' %}
   </head>
+
   <body>
     {% include 'nav.html' %}
-    <form method="post">
-      {%csrf_token%}
-      <table>
-        {{ form_data.as_table }}
-        <tr>
-          <td>
-            <input type="Submit" class="btn btn-info" value="Search" \ />
-          </td>
-        </tr>
-      </table>
-    </form>
-    {% if num_results %}
-    <h3 class="text-center">Found {{ num_results }} results!</h3>
-    <table>
-      <tr>
-        <th class="text-center">Recipe Name</th>
-        <th class="text-center">Diet Labels</th>
-        <th class="text-center">Health Labels</th>
-        <th class="text-center">Cautions</th>
-        <th class="text-center">Ingredients</th>
-        <th class="text-center">Meal Type</th>
-        <th class="text-center">Dish Type</th>
-        <th class="text-center">Link to Instructions</th>
-      </tr>
-      {% for item in parsed_data %}
-      <tr>
-        <td class="text-center">{{ item.label }}</td>
-        <td class="text-center">{{ item.dietLabels }}</td>
-        <td class="text-center">{{ item.healthLabels }}</td>
-        <td class="text-center">{{ item.cautions }}</td>
-        <td class="text-center">{{ item.ingredients }}</td>
-        <td class="text-center">{{ item.mealType }}</td>
-        <td class="text-center">{{ item.dishType }}</td>
-        <td>
-          <a target="_blank" href="{{ item.instructionLink }}"
-            >Instructions Link</a
-          >
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-    {% endif %}
+    <div class="container">
+      <div class="transparent">
+        <form method="post">
+          {%csrf_token%}
+          <table>
+            {{ form_data.as_table }}
+            <tr>
+              <td>
+                <input type="Submit" class="btn btn-info" value="Search" />
+              </td>
+            </tr>
+          </table>
+        </form>
+        {% if num_results %}
+        <h3 class="text-center">Found {{ num_results }} results!</h3>
+        <table>
+          <tr>
+            <th class="text-center">Recipe Name</th>
+            <th class="text-center">Diet Labels</th>
+            <th class="text-center">Health Labels</th>
+            <th class="text-center">Cautions</th>
+            <th class="text-center">Ingredients</th>
+            <th class="text-center">Meal Type</th>
+            <th class="text-center">Dish Type</th>
+            <th class="text-center">Link to Instructions</th>
+            <th class="text-center">Shareable Link</th>
+          </tr>
+          {% for item in parsed_data %}
+          <tr>
+            <td class="text-center">{{ item.label }}</td>
+            <td class="text-center">{{ item.dietLabels }}</td>
+            <td class="text-center">{{ item.healthLabels }}</td>
+            <td class="text-center">{{ item.cautions }}</td>
+            <td class="text-center">{{ item.ingredients }}</td>
+            <td class="text-center">{{ item.mealType }}</td>
+            <td class="text-center">{{ item.dishType }}</td>
+            <td>
+              <a target="_blank" href="{{ item.instructionLink }}"
+                >Instructions Link</a
+              >
+            </td>
+            <!-- <td>
+              <a target="_blank" href="{{ item.shareable_link }}"
+                >Shareable Link</a
+              >
+            </td> -->
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %}
+      </div>
+    </div>
   </body>
 </html>

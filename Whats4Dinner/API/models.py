@@ -1,4 +1,8 @@
+'''
+Model declarations
+'''
 from django.db import models
+from PIL import Image
 
 MEAL_TYPE = [
     ("", "None"),
@@ -59,7 +63,10 @@ HEALTH_TYPE = [
 
 
 # Create your models here.
-class Recipe_Search(models.Model):
+class RecipeSearch(models.Model):
+    '''
+    Recpe search model declaration
+    '''
     Recipe_Name = models.CharField(max_length=50)
     Image = models.ImageField
     Ingrediants = models.CharField(max_length=300, null=True)
@@ -69,6 +76,8 @@ class Recipe_Search(models.Model):
     Diet = models.CharField(choices=DIET_TYPE, max_length=40, null=True)
     Calories = models.CharField(max_length=50, null=True)
     Time = models.IntegerField(null=True)
+    # Added field for shareable link
+    shareable_link = models.URLField(max_length=200, unique=True)
 
 class Create_Recipe(models.Model):
     Create_RecipeName = models.CharField(null=False,max_length=50)
@@ -82,9 +91,35 @@ class Create_Recipe(models.Model):
     Upload_Image=models.ImageField(null=True, blank=True, upload_to="Uploads/")
 
 class User(models.Model):
+    '''
+    Custom User model declaration
+    '''
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=50)
     like_recipe = models.URLField(max_length=200)
     experience = models.CharField(max_length=500)
     calories_count = models.IntegerField()
+
+
+class Profile(models.Model):
+    '''
+    User Profile model declaration
+    '''
+    user = models.OneToOneField(
+        User, related_name='userprofile', on_delete=models.CASCADE)
+    avatar = models.ImageField(default='default_pfp.png', upload_to='users/')
+    bio = models.TextField()
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)

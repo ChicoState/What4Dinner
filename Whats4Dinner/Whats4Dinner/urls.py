@@ -27,6 +27,8 @@ urlpatterns = [
     path('signup/', api_views.signup),
     path('login/', api_views.user_login),
     path('userprofile/', api_views.userprofile),
+    path('editprofile/', api_views.edit_profile),
+    path('profile/', api_views.profile),
     path('logout/', api_views.user_logout),
     path('create/', api_views.create),
     
