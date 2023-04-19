@@ -1,8 +1,9 @@
-from API.form import LoginForm, RecipeSearchForm, SignUpForm
+from API.form import LoginForm, RecipeSearchForm, SignUpForm, RecipeCreateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+from .models import Create_Recipe
 
 from .API_data import get_api_data, parse_api_data
 
@@ -23,7 +24,6 @@ def home(request):
 
 def about(request):
     return render(request, "API/about.html")
-
 
 @login_required(login_url='/login/')
 def userprofile(request):
@@ -65,6 +65,87 @@ def search(request):
             "form_data": RecipeSearchForm
         }
         return render(request, "API/search.html", context)
+    
+@login_required(login_url='/login/')
+def create(request):
+    if request.method == "POST":
+        create_form = RecipeCreateForm(request.POST, request.FILES)
+        if create_form.is_valid():
+            # Create a Recipe object and set its attributes
+            recipe = create_form.save(commit=False)
+            recipe.Create_RecipeName = create_form.cleaned_data['Recipe_Name']
+            recipe.Create_Ingrediants = create_form.cleaned_data['List_Ingredients']
+            recipe.Create_Meal_Type = create_form.cleaned_data['Meal_Type']
+            recipe.Create_Health_Type = create_form.cleaned_data['Health_Type']    
+            recipe.Create_Diet = create_form.cleaned_data['Diet']
+            recipe.Create_Calories = create_form.cleaned_data['Total_Calories']
+            recipe.Create_Time = create_form.cleaned_data['Time_Needed']
+            recipe.Create_Instruct = create_form.cleaned_data['Instructions']
+            recipe.Upload_Image = create_form.cleaned_data['Upload_Image'] 
+            recipe.save()
+            
+            # Set the context with the values of the Recipe object
+            context = {
+                "form": RecipeCreateForm,
+                "Recipe_Name": recipe.Create_RecipeName,
+                "List_Ingredients": recipe.Create_Ingrediants,
+                "Meal_Type": recipe.Create_Meal_Type,
+                "Health_Type": recipe.Create_Health_Type,
+                "Diet": recipe.Create_Diet,
+                "Total_Calories": recipe.Create_Calories,
+                "Time_Needed": recipe.Create_Time,
+                "Instructions": recipe.Create_Instruct,
+                "Upload_Image": recipe.Upload_Image,
+            }
+            
+            return render(request, "API/create.html", context)
+        else:
+            # If the form is not valid, render the form with error messages
+            return render(request, "API/create.html", {'form': create_form})
+    else:
+        # If it's a GET request, render the form
+        return render(request, "API/create.html", {'form': RecipeCreateForm()})
+
+
+
+
+# @login_required(login_url='/login/')
+# def create(request):
+#     if (request.method== "POST"):
+#         create_form = RecipeCreateForm(request.POST, request.FILES)
+#         if create_form.is_valid():
+#             Created = create_form.save()
+            
+#             Name = create_form.cleaned_data['Recipe_Name']
+#             Ingrediants = create_form.cleaned_data['List_Ingredients']
+#             Meal = create_form.cleaned_data['Meal_Type']
+#             Health = create_form.cleaned_data['Health_Type']    
+#             Diet = create_form.cleaned_data['Diet']
+#             Calories = create_form.cleaned_data['Total_Calories']
+#             Time = create_form.cleaned_data['Time_Needed']
+#             image1 = create_form.cleaned_data['Upload_Image'] 
+#             context = {
+#             "form": RecipeCreateForm,
+#             "Recipe_Name": Name,
+#             "List_Ingredients": Ingrediants,
+#             "Meal_Type": Meal,
+#             "Health_Type": Health,
+#             "Diet": Diet,
+#             "Total_Calories": Calories,
+#             "Time_Needed": Time,
+#             "Upload_Image": image1,
+#             }
+#             Created(Recipe_Name=Name,List_Ingredients=Ingrediants,Meal_Type=Meal,Health_Type=Health,Diet=Diet,Total_Calories=Calories,Time_Needed=Time,Upload_Image=image1).save()
+#     #     Create_Recipe(Create_RecipeName=Name,Create_Ingrediants=Ingrediants,Create_Meal_Type=Meal,Create_Health_Type=Health,Create_Diet=Diet,Create_Calories=Calories,Create_Time=Time,Upload_Image=image1).save()
+
+#         return render(request, "API/create.html", context)
+#     return render(request, "API/create.html", {'form': RecipeCreateForm}) 
+
+    # else:
+    #     context = {
+    #         "form_data": RecipeCreateForm
+    #     }
+    #     return render(request, "API/create.html", context)
 
 
 def signup(request):

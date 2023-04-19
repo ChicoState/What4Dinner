@@ -70,6 +70,16 @@ class Recipe_Search(models.Model):
     Calories = models.CharField(max_length=50, null=True)
     Time = models.IntegerField(null=True)
 
+class Create_Recipe(models.Model):
+    Create_RecipeName = models.CharField(null=False,max_length=50)
+    Create_Ingrediants=models.CharField(null=False,max_length=300)
+    Create_Meal_Type=models.CharField(choices=MEAL_TYPE, max_length=20, null=False)
+    Create_Health_Type=models.CharField(choices=HEALTH_TYPE, max_length=40, null=False)
+    Create_Diet=models.CharField(choices=DIET_TYPE, max_length=40, null=False)
+    Create_Calories=models.CharField(null=False, max_length=50)
+    Create_Time=models.CharField(null=False, max_length=50)
+    Create_Instruct = models.CharField(null=False, max_length=10000, default='')
+    Upload_Image=models.ImageField(null=True, blank=True, upload_to="Uploads/")
 
 class User(models.Model):
     name = models.CharField(max_length=50)
