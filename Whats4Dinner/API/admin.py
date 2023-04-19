@@ -9,4 +9,3 @@ admin.site.register(RecipeSearch)
 admin.site.register(User)
 admin.site.register(Profile)
 admin.site.register(Create_Recipe)
-
