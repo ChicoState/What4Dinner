@@ -6,6 +6,8 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from API.form import UpdateUserForm, UpdateProfileForm
 from .API_data import get_api_data, parse_api_data
+import uuid
+from django.urls import reverse
 
 #from django.contrib.auth.forms import SignUp
 
@@ -52,7 +54,11 @@ def search(request):
             parsed_data = parse_api_data(res.json())
             # Sorts the recipes by recipe name
             parsed_data.sort(key=lambda x: x['label'], reverse=False)
-            print(parsed_data)
+
+            for recipe in parsed_data:
+                recipe['shareable_link'] = request.build_absolute_uri(
+                    reverse('recipe_detail', args=[recipe['uri'].split('_')[-1], uuid.uuid4()]))
+
             context = {
                 "form_data": RecipeSearchForm,
                 "num_results": len(parsed_data),
@@ -71,6 +77,15 @@ def search(request):
         }
         return render(request, "API/search.html", context)
 
+def recipe_detail_view(request, uri, uuid):
+    parsed_data = parse_api_data(get_api_data(uri).json())[0]
+    parsed_data['shareable_link'] = request.build_absolute_uri(reverse('recipe_detail', args=[uri.split('_')[-1], uuid]))
+
+    context = {
+        'parsed_data': parsed_data
+    }
+
+    return render(request, 'API/recipe_detail.html', context)
 
 def signup(request):
     if (request.method == "POST"):

@@ -9,6 +9,7 @@
   <title>Search Recipes</title>
   <style>
     body {
+      margin-top: -20px;
       background-image: url("{% static 'Pan.jpg' %}");
       background-repeat: no-repeat;
       background-size: cover;
@@ -63,20 +64,19 @@
         </tr>
         {% for item in parsed_data %}
         <tr>
-        <td class="text-center">{{ item.label }}</td>
-        <td class="text-center">{{ item.dietLabels }}</td>
-        <td class="text-center">{{ item.healthLabels }}</td>
-        <td class="text-center">{{ item.cautions }}</td>
-        <td class="text-center">{{ item.ingredients }}</td>
-        <td class="text-center">{{ item.mealType }}</td>
-        <td class="text-center">{{ item.dishType }}</td>
-        <td>
-          <a target="_blank" href="{{ item.instructionLink }}"
-            >Instructions Link</a
-          >
+          <td class="text-center">{{ item.label }}</td>
+          <td class="text-center">{{ item.dietLabels }}</td>
+          <td class="text-center">{{ item.healthLabels }}</td>
+          <td class="text-center">{{ item.cautions }}</td>
+          <td class="text-center">{{ item.ingredients }}</td>
+          <td class="text-center">{{ item.mealType }}</td>
+          <td class="text-center">{{ item.dishType }}</td>
+          <td>
+            <a target="_blank" href="{{ item.instructionLink }}">Instructions Link</a>
           </td>
-          <td> <!-- Added cell for shareable link-->
-            <a target="_blank" href="{{ item.shareable_link }}">Shareable Link</a>
+          <td>
+            <input type="text" value="{{ item.shareable_link }}" readonly />
+            <a href="{% url 'recipe_detail' uri=item.uri uuid=item.uuid %}">Permalink</a>
           </td>
         </tr>
         {% endfor %}
@@ -85,4 +85,5 @@
     </div>
   </div>
 </body>
+
 </html>

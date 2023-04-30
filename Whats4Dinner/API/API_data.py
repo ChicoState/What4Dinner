@@ -67,7 +67,6 @@ def parse_api_data(data):
         except:
             tmp["dishType"] = "N/A"
         tmp["instructionLink"] = item["recipe"]["url"]
-        tmp["shareable_link"] = item["recipe"]["shareAs"]  # Added line for shareable link
 
         parsed_data.append(tmp)
     return parsed_data

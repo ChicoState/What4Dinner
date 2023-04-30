@@ -18,6 +18,8 @@ from django.urls import path
 from API import views as api_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
+# from .views import home_view, search_view, recipe_detail_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +32,10 @@ urlpatterns = [
     path('editprofile/', api_views.edit_profile),
     path('profile/', api_views.profile),
     path('logout/', api_views.user_logout),
+    #path('', home_view, name='home'),
+    #path('search/', search_view, name='search'),
+    #path('recipe/<str:uri>/<uuid:uuid>/', recipe_detail_view, name='recipe_detail'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
