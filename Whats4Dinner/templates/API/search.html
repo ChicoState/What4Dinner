@@ -50,6 +50,7 @@
         <h3 class="text-center">Found {{ num_results }} results!</h3>
         <table>
           <tr>
+            <th class="text-center">Recipe Image</th>
             <th class="text-center">Recipe Name</th>
             <th class="text-center">Diet Labels</th>
             <th class="text-center">Health Labels</th>
@@ -62,6 +63,12 @@
           </tr>
           {% for item in parsed_data %}
           <tr>
+            <td>
+              <img
+                src="{{ item.thumbnail }}"
+                alt=" Image of {{ item.label }}"
+              />
+            </td>
             <td class="text-center">{{ item.label }}</td>
             <td class="text-center">{{ item.dietLabels }}</td>
             <td class="text-center">{{ item.healthLabels }}</td>

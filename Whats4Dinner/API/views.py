@@ -1,15 +1,17 @@
 '''
 All views for the website
 '''
-from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
-                      UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from .models import Create_Recipe
+
+from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
+                      SignUpForm, UpdateProfileForm, UpdateUserForm)
+
 from .API_data import get_api_data, parse_api_data
+from .models import Create_Recipe
 
 # from django.contrib.auth.forms import SignUp
 
@@ -87,17 +89,15 @@ def search(request):
                 "parsed_data": parsed_data,
             }
             return render(request, "API/search.html", context)
-        else:
-            context = {
-                "form_data": RecipeSearchForm
-            }
-            return render(request, "API/search.html", context)
-
-    else:
         context = {
             "form_data": RecipeSearchForm
         }
         return render(request, "API/search.html", context)
+    context = {
+        "form_data": RecipeSearchForm
+    }
+    return render(request, "API/search.html", context)
+
 
 @login_required(login_url='/login/')
 def create(request):
@@ -135,12 +135,10 @@ def create(request):
             }
 
             return render(request, "API/create.html", context)
-        else:
-            # If the form is not valid, render the form with error messages
-            return render(request, "API/create.html", {'form': create_form})
-    else:
-        # If it's a GET request, render the form
-        return render(request, "API/create.html", {'form': RecipeCreateForm()})
+        # If the form is not valid, render the form with error messages
+        return render(request, "API/create.html", {'form': create_form})
+    # If it's a GET request, render the form
+    return render(request, "API/create.html", {'form': RecipeCreateForm()})
 
 
 def signup(request):
@@ -154,13 +152,11 @@ def signup(request):
             user.set_password(user.password)
             user.save()
             return render(request, "API/login.html")
-        else:
-            page_data = {"signup_form": signup_form}
-            return render(request, "API/signup.html", page_data)
-    else:
-        signup_form = SignUpForm()
         page_data = {"signup_form": signup_form}
         return render(request, "API/signup.html", page_data)
+    signup_form = SignUpForm()
+    page_data = {"signup_form": signup_form}
+    return render(request, "API/signup.html", page_data)
 
 
 def user_login(request):
@@ -177,21 +173,17 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     return redirect(userprofile)
-                else:
-                    return HttpResponseRedirect("There is no account \
-                                                associated with that username.")
-            else:
-                print("Someone tried to login and failed.")
-                print(
-                    f"They used username: {username} and password: {password}")
-                return render(request, 'API/login.html', {"login_form": LoginForm})
-        else:
-            return render(request, "API/login.html", {"login_form": LoginForm})
-    else:
+                return HttpResponseRedirect("There is no account \
+                                            associated with that username.")
+            print("Someone tried to login and failed.")
+            print(
+                f"They used username: {username} and password: {password}")
+            return render(request, 'API/login.html', {"login_form": LoginForm})
         return render(request, "API/login.html", {"login_form": LoginForm})
+    return render(request, "API/login.html", {"login_form": LoginForm})
 
 
-@ login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def profile(request):
     '''
     User profile view.
@@ -206,9 +198,7 @@ def profile(request):
             profile_form.save()
             messages.success(request, 'Your profile is updated successfully')
             return redirect(userprofile)
-    else:
-        user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateProfileForm(instance=request.user)
-
+    user_form = UpdateUserForm(instance=request.user)
+    profile_form = UpdateProfileForm(instance=request.user)
     return render(request, 'API/editProfile.html',
                   {'user_form': user_form, 'profile_form': profile_form})

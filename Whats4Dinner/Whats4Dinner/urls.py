@@ -13,24 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
 from API import views as api_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', api_views.home),
-    path('about/', api_views.about),
-    path('search/', api_views.search),
-    path('signup/', api_views.signup),
-    path('login/', api_views.user_login),
-    path('userprofile/', api_views.userprofile),
-    path('editprofile/', api_views.edit_profile),
-    path('profile/', api_views.profile),
-    path('logout/', api_views.user_logout),
-    path('create/', api_views.create),
-    
+    path('admin/', admin.site.urls, name="home"),
+    path('', api_views.home, name="home"),
+    path('about/', api_views.about, name="about"),
+    path('search/', api_views.search, name="search"),
+    path('signup/', api_views.signup, name="signup"),
+    path('login/', api_views.user_login, name="login"),
+    path('userprofile/', api_views.userprofile, name="userProfile"),
+    path('editprofile/', api_views.edit_profile, name="editProfile"),
+    path('profile/', api_views.profile, name="profile"),
+    path('logout/', api_views.user_logout, name="logout"),
+    path('create/', api_views.create, name="create"),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
