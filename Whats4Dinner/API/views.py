@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render
 from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
                       SignUpForm, UpdateProfileForm, UpdateUserForm)
 
-from .API_data import get_api_data, parse_api_data
+from .api_data import get_api_data, parse_api_data
 from .models import Create_Recipe
 
 # from django.contrib.auth.forms import SignUp

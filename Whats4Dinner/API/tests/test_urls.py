@@ -86,6 +86,11 @@ class UrlTestUnauthenticated(SimpleTestCase):
         response = self.client.get(reverse("signup"))
         self.assertTemplateUsed(response, "API/signup.html")
 
+    def test_search_template_redirect_for_unauthenticated_user(self):
+        """Testing that the login template is used when user tries to search but is not authenticated"""
+        response = self.client.get(reverse("search"))
+        self.assertTemplateNotUsed(response, "API/search.html")
+
 
 class UrlTestAuthenticated(TestCase):
     '''
