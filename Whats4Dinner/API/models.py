@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import Model
+from django.contrib.auth.models import User
+from PIL import Image
 
 MEAL_TYPE = [
     ('breakfast', 'Breakfast'),
@@ -27,11 +29,25 @@ class Recipe_Search(models.Model):
     Diet=models.CharField(choices=DIET_TYPE,max_length=40)
     Calories=models.IntegerField()
     Time=models.IntegerField()
-    
-class User(models.Model):
-    name=models.CharField(max_length=50)
-    email=models.EmailField(max_length=254)
-    password=models.CharField(max_length=50)
-    like_recipe=models.URLField(max_length=200)
-    experience=models.CharField(max_length=500)
-    calories_count=models.IntegerField()
+
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    follows = models.ManyToManyField("self", related_name="followed_by", symmetrical=False, blank=True)
+    bio = models.TextField(null=False)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self):
+        super().save()
+
+        img = Image.open(self.image.path)
+
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)

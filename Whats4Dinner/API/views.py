@@ -2,10 +2,10 @@ import urllib.parse
 
 from decouple import config
 from django.shortcuts import render, redirect
-from API.form import RecipeSearchForm, SignUpForm, LoginForm
+from API.form import RecipeSearchForm, SignUpForm, LoginForm, UpdateUserForm, UpdateProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-#from django.contrib.auth.forms import SignUp
+from django.contrib import messages
 
 # Create your views here.
 
@@ -120,3 +120,26 @@ def user_login(request):
             return render(request, "API/login.html", {"login_form": LoginForm})
     else:
             return render(request, "API/login.html", {"login_form": LoginForm})
+
+@login_required(login_url='/login/')
+def updateProfile(request):
+    if request.method == 'POST':
+        updateUser = UpdateUserForm(request.POST, instance=request.user)
+        updateProfile = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if updateUser.is_valid() and updateProfile.is_valid():
+            updateUser.save()
+            updateProfile.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect(userprofile) # Redirect back to profile page
+
+    else:
+        updateUser = UpdateUserForm(instance=request.user)
+        updateProfile = UpdateProfileForm(instance=request.user.profile)
+
+    context = {
+        'updateUser': updateUser,
+        'updateProfile': updateProfile
+    }
+
+    return render(request, 'API/updateProfile.html', context)
