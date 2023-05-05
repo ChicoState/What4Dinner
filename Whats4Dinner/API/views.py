@@ -41,7 +41,6 @@ def home(request):
         recipe = random.choice(recipes)
         return render(request, 'API/home.html', {'recipe': recipe})
 
-
 def about(request):
     '''
     About page view
