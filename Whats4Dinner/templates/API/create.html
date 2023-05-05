@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create a Recipe</title>
+  {% include 'head.html' %}
+
+</head>
+<style>
+  body {
+    background-image: url("{% static 'ing.jpg' %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-y: scroll;
+    height: 100%;
+  }
+  .form-wrapper {
+    margin-top: 20;
+    margin: auto;
+    margin-top: 5%;
+    background-color: lightblue;
+    border: 1px solid #0a0a0a;
+    border-radius: 5px;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1 {
+      margin: auto;
+      background-color: lightblue;
+      border: 1px solid #0a0a0a;
+      border-radius: 10px;
+      width: 700px;
+      height: 150px;
+      display: flex;
+      align-self: center;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+</style>
+
+<body>
+  {% include 'nav.html' %}
+  <h1 class="text-center" style="color: white; font-size: 75px; text-shadow: -2px 0 black, 
+  0 2px black, 2px 0 black, 0 -2px black;"><b>Create A Recipe!</b></h1>
+  <div class="form-wrapper">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+        <tr>
+          <td>
+            <input type="submit" class="btn btn-info .center-btn" value="Create" />
+          </td>
+        </tr>
+      </table>
+    </form>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    <a class="nav-link" href="/recipes">View All Created Recipes Here:</a>
+  </div>
+</body>
+
+</html>

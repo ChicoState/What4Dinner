@@ -1,8 +1,12 @@
+'''
+admin view
+'''
 from django.contrib import admin
-from .models import Recipe_Search
+from .models import Profile, RecipeSearch, User, CreateRecipe, RecomendedRecipes
 from django.contrib.auth.models import User
-from .models import Profile
 
 # Register your models here.
-admin.site.register(Recipe_Search)
+admin.site.register(RecipeSearch)
 admin.site.register(Profile)
+admin.site.register(CreateRecipe)
+admin.site.register(RecomendedRecipes)
