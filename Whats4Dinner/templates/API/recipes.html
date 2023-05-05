@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe List</title>
+  {% include 'head.html' %}
+  </style>
+</head>
+
+<style>
+  body {
+    background-image: url("{% static 'blueboards.jpg' %}");
+    background-repeat: repeat;
+    background-size: cover;
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  h1 {
+    margin: auto;
+    background-color: lightblue;
+    border: 1px solid #0a0a0a;
+    border-radius: 10px;
+    width: 900px;
+    height: 200px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+</style>
+
+<body>
+  {% include 'nav.html' %}
+  <h1 class="text-center" style="color: white; font-size: 75px; text-shadow: -2px 0 black, 
+  0 2px black, 2px 0 black, 0 -2px black;">List of Created Recipes:</h1>
+  <div class="row row-cols-1 row-cols-md-5 g-4">
+    {% for recipe in recipe_obj %}
+    <div class="col mb-5">
+      <div class="card h-100">
+        <img src="{{ recipe.Upload_Image.url }}" class="card-img-top" alt="Recipe Image">
+        <div class="card-body" style="background-color: wheat;">
+          <h5 class="card-title"><b>{{ recipe.Create_RecipeName }}</b></h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Ingredients:</b> {{ recipe.Create_Ingrediants }}</li>
+            <li class="list-group-item"><b>Meal Type:</b> {{ recipe.Create_Meal_Type }}</li>
+            <li class="list-group-item"><b>Health Type:</b> {{ recipe.Create_Health_Type }}</li>
+            <li class="list-group-item"><b>Diet:</b> {{ recipe.Create_Diet }}</li>
+            <li class="list-group-item"><b>Calories:</b> {{ recipe.Create_Calories }}</li>
+            <li class="list-group-item"><b>Time:</b> {{ recipe.Create_Time }}</li>
+            <li class="list-group-item"><b>Instructions:</b> {{ recipe.Create_Instruct }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+
+
+</body>
+
+</html>

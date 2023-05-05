@@ -4,10 +4,9 @@ Forms for the application
 
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import ModelForm
 # from django.contrib.auth.models import Create_Recipe
 
-from .models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE, Profile, Create_Recipe
+from .models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE, Profile, CreateRecipe
 
 
 class RecipeSearchForm(forms.Form):
@@ -26,8 +25,11 @@ class RecipeSearchForm(forms.Form):
     Calorie_Range = forms.CharField(widget=forms.TextInput(), required=False)
     Max_Amount_Of_Time = forms.IntegerField(
         widget=forms.NumberInput(), required=False)
-    
+
 class RecipeCreateForm(forms.ModelForm):
+    '''
+    Create Recipe form fields
+    '''
     Recipe_Name = forms.CharField(widget=forms.TextInput())
     List_Ingredients = forms.CharField(widget=forms.TextInput())
     Meal_Type = forms.CharField(
@@ -42,8 +44,11 @@ class RecipeCreateForm(forms.ModelForm):
     Upload_Image = forms.ImageField()
 
     class Meta():
-            model = Create_Recipe
-            fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type','Health_Type',
+        '''
+        Meta Create Recipe fields
+        '''
+        model = CreateRecipe
+        fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type','Health_Type',
                        'Diet', 'Total_Calories','Time_Needed','Instructions','Upload_Image']
 
 
