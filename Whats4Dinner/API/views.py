@@ -1,36 +1,23 @@
 '''
 All views for the website
 '''
-<<<<<<< HEAD
-=======
 import random
-from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
-                      UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
->>>>>>> main
+
+from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
+                      SignUpForm, UpdateProfileForm, UpdateUserForm)
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-<<<<<<< HEAD
-
-from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
-                      SignUpForm, UpdateProfileForm, UpdateUserForm)
 
 from .api_data import get_api_data, parse_api_data
-from .models import Create_Recipe
-=======
 from .models import CreateRecipe, RecomendedRecipes
-from .API_data import get_api_data, parse_api_data
->>>>>>> main
-
-
-
-
 
 # from django.contrib.auth.forms import SignUp
 
 # Create your views here.
+
 
 @login_required(login_url='/login/')
 def user_logout(request):
@@ -45,8 +32,11 @@ def home(request):
     '''
     Random Recipe View.
     '''
-    recipe = random.choice(RecomendedRecipes.objects.all())
-    print(recipe) # make sure that the recipe object is being retrieved correctly
+    try:
+        recipe = random.choice(RecomendedRecipes.objects.all())
+    except IndexError:
+        recipe = ""
+    print(recipe)  # make sure that the recipe object is being retrieved correctly
     return render(request, 'API/home.html', {'recipe': recipe})
 
 
@@ -71,6 +61,7 @@ def edit_profile(request):
     Edit profile view
     '''
     return render(request, "API/editProfile.html")
+
 
 @login_required(login_url='/login/')
 def search(request):
@@ -113,11 +104,6 @@ def search(request):
     return render(request, "API/search.html", context)
 
 
-    context = {
-        "form_data": RecipeSearchForm
-    }
-    return render(request, "API/search.html", context)
-
 @login_required(login_url='/login/')
 def create(request):
     '''
@@ -154,7 +140,7 @@ def create(request):
                 "message": "Recipe created successfully!",
             }
 
-             # Add success message to messages framework
+            # Add success message to messages framework
             messages.success(request, 'Recipe created successfully!')
 
             return render(request, "API/create.html", context)
@@ -223,12 +209,9 @@ def profile(request):
             return redirect(userprofile)
     user_form = UpdateUserForm(instance=request.user)
     profile_form = UpdateProfileForm(instance=request.user)
-<<<<<<< HEAD
-=======
-
->>>>>>> main
     return render(request, 'API/editProfile.html',
                   {'user_form': user_form, 'profile_form': profile_form})
+
 
 @login_required(login_url='/login/')
 def recipe_details(request):
@@ -236,5 +219,5 @@ def recipe_details(request):
     Created Recipe View.
     '''
     recipe_obj = CreateRecipe.objects.all()
-    return render (request, 'API/recipes.html',
-    {'recipe_obj': recipe_obj})
+    return render(request, 'API/recipes.html',
+                  {'recipe_obj': recipe_obj})

@@ -5,10 +5,9 @@ Testing can be ran using the following command
 ./manage.py test API
 '''
 
+from API.models import CreateRecipe, RecipeSearch
 from django.contrib.auth.models import User
 from django.test import TestCase
-
-from API.models import Create_Recipe, RecipeSearch
 
 
 class ModelTest(TestCase):
@@ -31,15 +30,15 @@ class ModelTest(TestCase):
 
     def create_custom_recipe(self):
         '''Simulates a user-created recipe'''
-        return Create_Recipe.objects.create(Create_RecipeName="Test created recipe",
-                                            Create_Ingrediants="123 ingrediants",
-                                            Create_Meal_Type="Dinner",
-                                            Create_Health_Type="DASH",
-                                            Create_Diet="Balanced",
-                                            Create_Calories="123000",
-                                            Create_Time="45 minutes",
-                                            Create_Instruct="1. bake 2. eat",
-                                            Upload_Image="/ Users/jakewest/Desktop/profilePic.jpg")
+        return CreateRecipe.objects.create(Create_RecipeName="Test created recipe",
+                                           Create_Ingrediants="123 ingrediants",
+                                           Create_Meal_Type="Dinner",
+                                           Create_Health_Type="DASH",
+                                           Create_Diet="Balanced",
+                                           Create_Calories="123000",
+                                           Create_Time="45 minutes",
+                                           Create_Instruct="1. bake 2. eat",
+                                           Upload_Image="/ Users/jakewest/Desktop/profilePic.jpg")
 
     def test_models_smoke_test(self):
         '''smoke test'''
@@ -53,7 +52,7 @@ class ModelTest(TestCase):
     def test_save_user_created_recipe(self):
         '''Tests that a user created recipe is saved correctly'''
         recipe = self.create_custom_recipe()
-        self.assertTrue(isinstance(recipe, Create_Recipe))
+        self.assertTrue(isinstance(recipe, CreateRecipe))
 
     def test_save_user_profile(self):
         '''Tests that a users bio and profile picture are updated correctly'''
