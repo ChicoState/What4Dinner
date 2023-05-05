@@ -33,10 +33,13 @@ def home(request):
     '''
     Random Recipe View.
     '''
-    recipe = random.choice(RecomendedRecipes.objects.all())
-    print(recipe) # make sure that the recipe object is being retrieved correctly
-    return render(request, 'API/home.html', {'recipe': recipe})
-
+    recipes = RecomendedRecipes.objects.all()
+    if not recipes:
+        message = "There are no recipes to display."
+        return render(request, 'API/home.html', {'message': message})
+    else:
+        recipe = random.choice(recipes)
+        return render(request, 'API/home.html', {'recipe': recipe})
 
 def about(request):
     '''
