@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import urllib.parse
-
-from decouple import config
-from django.shortcuts import render, redirect
-from API.form import RecipeSearchForm, SignUpForm, LoginForm, UpdateUserForm, UpdateProfileForm
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-=======
 import random
 from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
                       UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
@@ -23,7 +13,6 @@ import urllib.parse
 from decouple import config
 
 # from django.contrib.auth.forms import SignUp
->>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15
 
 # Create your views here.
 
@@ -128,10 +117,7 @@ def user_login(request):
                 if user.is_active:
                     login(request,user)
                     return redirect(userprofile)
-<<<<<<< HEAD
-=======
 
->>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15
                 else:
                     return HttpResponseRedirect("Your account is not setup.")
             else:
@@ -165,7 +151,3 @@ def updateProfile(request):
     }
 
     return render(request, 'API/updateProfile.html', context)
-<<<<<<< HEAD
-=======
-
->>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15
