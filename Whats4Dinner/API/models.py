@@ -2,10 +2,9 @@
 Model declarations
 '''
 from django.db import models
-from django.db.models import Model
-from django.contrib.auth.models import User
 from PIL import Image
-
+from django.contrib.auth.models import User
+from django.db.models import Model
 MEAL_TYPE = [
     ("", "None"),
     ('breakfast', 'Breakfast'),
@@ -92,7 +91,12 @@ class Create_Recipe(models.Model):
     Create_Instruct = models.CharField(null=False, max_length=10000, default='')
     Upload_Image=models.ImageField(null=True, blank=True, upload_to="Uploads/")
 
-
+class RecomendedRecipes(models.Model):
+    '''
+    Random Recipe create model declaration
+    '''
+    Rec_Recipe_Name = models.CharField(null=False,max_length=50)
+    Rec_URL = models.URLField()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

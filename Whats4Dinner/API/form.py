@@ -3,8 +3,6 @@ Forms for the application
 '''
 
 from django import forms
-from API.models import Recipe_Search, Profile
-from API.models import MEAL_TYPE, DIET_TYPE
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 # from django.contrib.auth.models import Create_Recipe

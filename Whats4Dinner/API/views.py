@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import urllib.parse
 
 from decouple import config
@@ -6,6 +7,23 @@ from API.form import RecipeSearchForm, SignUpForm, LoginForm, UpdateUserForm, Up
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+=======
+import random
+from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
+                      UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
+from .models import CreateRecipe, RecomendedRecipes
+from .API_data import get_api_data, parse_api_data
+import urllib.parse
+
+from decouple import config
+
+# from django.contrib.auth.forms import SignUp
+>>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15
 
 # Create your views here.
 
@@ -110,6 +128,10 @@ def user_login(request):
                 if user.is_active:
                     login(request,user)
                     return redirect(userprofile)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15
                 else:
                     return HttpResponseRedirect("Your account is not setup.")
             else:
@@ -143,3 +165,7 @@ def updateProfile(request):
     }
 
     return render(request, 'API/updateProfile.html', context)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15

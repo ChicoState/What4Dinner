@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+<<<<<<< HEAD
 from API import views as api_views
+=======
+>>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,5 +32,13 @@ urlpatterns = [
     path('updateProfile/', api_views.updateProfile),
     path('userprofile/', api_views.userprofile),
     path('logout/', api_views.user_logout),
+<<<<<<< HEAD
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+    path('create/', api_views.create),
+    path('recipes/',api_views.recipe_details),
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+>>>>>>> 261b0ca88f8a1607c93cd7fbc25429cee781af15
