@@ -1,22 +1,36 @@
 '''
 All views for the website
 '''
+<<<<<<< HEAD
+=======
+import random
+from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
+                      UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
+>>>>>>> main
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+<<<<<<< HEAD
 
 from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
                       SignUpForm, UpdateProfileForm, UpdateUserForm)
 
 from .api_data import get_api_data, parse_api_data
 from .models import Create_Recipe
+=======
+from .models import CreateRecipe, RecomendedRecipes
+from .API_data import get_api_data, parse_api_data
+>>>>>>> main
+
+
+
+
 
 # from django.contrib.auth.forms import SignUp
 
 # Create your views here.
-
 
 @login_required(login_url='/login/')
 def user_logout(request):
@@ -29,9 +43,11 @@ def user_logout(request):
 
 def home(request):
     '''
-    Default home view
+    Random Recipe View.
     '''
-    return render(request, "API/home.html")
+    recipe = random.choice(RecomendedRecipes.objects.all())
+    print(recipe) # make sure that the recipe object is being retrieved correctly
+    return render(request, 'API/home.html', {'recipe': recipe})
 
 
 def about(request):
@@ -55,7 +71,6 @@ def edit_profile(request):
     Edit profile view
     '''
     return render(request, "API/editProfile.html")
-
 
 @login_required(login_url='/login/')
 def search(request):
@@ -81,8 +96,7 @@ def search(request):
                                time=time)
             parsed_data = parse_api_data(res.json())
             # Sorts the recipes by recipe name
-            parsed_data.sort(key=lambda x: x['label'], reverse=False)
-            print(parsed_data)
+            # parsed_data.sort(key=lambda x: x['label'], reverse=False)
             context = {
                 "form_data": RecipeSearchForm,
                 "num_results": len(parsed_data),
@@ -98,6 +112,11 @@ def search(request):
     }
     return render(request, "API/search.html", context)
 
+
+    context = {
+        "form_data": RecipeSearchForm
+    }
+    return render(request, "API/search.html", context)
 
 @login_required(login_url='/login/')
 def create(request):
@@ -132,7 +151,11 @@ def create(request):
                 "Time_Needed": recipe.Create_Time,
                 "Instructions": recipe.Create_Instruct,
                 "Upload_Image": recipe.Upload_Image,
+                "message": "Recipe created successfully!",
             }
+
+             # Add success message to messages framework
+            messages.success(request, 'Recipe created successfully!')
 
             return render(request, "API/create.html", context)
         # If the form is not valid, render the form with error messages
@@ -200,5 +223,18 @@ def profile(request):
             return redirect(userprofile)
     user_form = UpdateUserForm(instance=request.user)
     profile_form = UpdateProfileForm(instance=request.user)
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
     return render(request, 'API/editProfile.html',
                   {'user_form': user_form, 'profile_form': profile_form})
+
+@login_required(login_url='/login/')
+def recipe_details(request):
+    '''
+    Created Recipe View.
+    '''
+    recipe_obj = CreateRecipe.objects.all()
+    return render (request, 'API/recipes.html',
+    {'recipe_obj': recipe_obj})

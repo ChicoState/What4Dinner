@@ -6,13 +6,51 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
   <title>About Us</title>
   {% include 'head.html' %}
 </head>
 
+<style>
+  h1 {
+    margin: auto;
+    background-color: lightblue;
+    border: 1px solid #0a0a0a;
+    border-radius: 10px;
+    width: 1200px;
+    height: 200px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-body {
+    background-color: lightblue;
+    border: 1px solid #0a0a0a;
+  }
+
+  .card-text {
+    background-color: lightblue;
+  }
+
+  .card-header {
+    background-color: wheat;
+  }
+  
+  body {
+  background-image:url('/static/R.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+</style>
+
 <body>
   {% include 'nav.html' %}
-  <h1 class="text-center mt-4">
+  <h1 class="text-center" style="color: white; font-size: 88px; text-shadow: -2px 0 black, 
+  0 2px black, 2px 0 black, 0 -2px black;">
     Meet the Development Team
   </h1>
   <div class="container px-lg-3">
@@ -20,7 +58,7 @@
       <div class="col py-3 px-lg-3">
         <div class="card">
           <div class="card-header">
-            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <img src="{%static 'Alex.jpg'%}" class="card-img-top mb-2" alt="default profile picture" width="350" height="300"/>
             <h4 class="card-title text-center">Alex Rosete</h4>
             <h5 class="card-subtitle text-center">Development Team</h5>
           </div>
@@ -49,7 +87,7 @@
       <div class="col py-3 px-lg-3">
         <div class="card">
           <div class="card-header">
-            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <img src="{%static 'Jake.jpg'%}" class="card-img-top mb-2" alt="default profile picture" width="350" height="300"/>
             <h4 class="card-title text-center">Jake West</h4>
             <h5 class="card-subtitle text-center">Development Team</h5>
           </div>
@@ -77,7 +115,7 @@
       <div class="col py-3 px-lg-3">
         <div class="card">
           <div class="card-header">
-            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <img src="{%static 'Default2.jpg'%}" class="card-img-top mb-2" alt="default profile picture" width="350" height="300"/>
             <h4 class="card-title text-center">Michael Saechao</h4>
             <h5 class="card-subtitle text-center">Development Team</h5>
           </div>
@@ -106,7 +144,7 @@
       <div class="col py-3 px-lg-3">
         <div class="card">
           <div class="card-header">
-            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <img src="{%static 'Default2.jpg'%}" class="card-img-top mb-2" alt="default profile picture" width="350" height="300"/>
             <h4 class="card-title text-center">Pranav Gopalakumaran</h4>
             <h5 class="card-subtitle text-center">Development Team</h5>
           </div>
@@ -130,7 +168,7 @@
       <div class="col py-3 px-lg-3">
         <div class="card">
           <div class="card-header">
-            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <img src="{%static 'Default2.jpg'%}" class="card-img-top mb-2" alt="default profile picture" width="350" height="300"/>
             <h4 class="card-title text-center">Bryce Ingersoll</h4>
             <h5 class="card-subtitle text-center">UX Team</h5>
           </div>
@@ -154,7 +192,7 @@
       <div class="col py-3 px-lg-3">
         <div class="card">
           <div class="card-header">
-            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <img src="{%static 'Default2.jpg'%}" class="card-img-top mb-2" alt="default profile picture" width="350" height="300"/>
             <h4 class="card-title text-center">Jonathan Hawkins</h4>
             <h5 class="card-subtitle text-center">UX Team</h5>
           </div>
@@ -179,7 +217,7 @@
       <div class="col py-3 px-lg-3">
         <div class="card">
           <div class="card-header">
-            <img src="{%static 'Default_pfp.png'%}" class="card-img-top mb-2" alt="default profile picture" />
+            <img src="{%static 'Default2.jpg'%}" class="card-img-top mb-2" alt="default profile picture" width="350" height="300"/>
             <h4 class="card-title text-center">Willow Brockhoff</h4>
             <h5 class="card-subtitle text-center">UX Team</h5>
           </div>

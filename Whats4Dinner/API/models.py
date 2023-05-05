@@ -79,7 +79,10 @@ class RecipeSearch(models.Model):
     # Added field for shareable link
     shareable_link = models.URLField(max_length=200, unique=True)
 
-class Create_Recipe(models.Model):
+class CreateRecipe(models.Model):
+    '''
+    Recpe create model declaration
+    '''
     Create_RecipeName = models.CharField(null=False,max_length=50)
     Create_Ingrediants=models.CharField(null=False,max_length=300)
     Create_Meal_Type=models.CharField(choices=MEAL_TYPE, max_length=20, null=False)
@@ -89,6 +92,13 @@ class Create_Recipe(models.Model):
     Create_Time=models.CharField(null=False, max_length=50)
     Create_Instruct = models.CharField(null=False, max_length=10000, default='')
     Upload_Image=models.ImageField(null=True, blank=True, upload_to="Uploads/")
+
+class RecomendedRecipes(models.Model):
+    '''
+    Random Recipe create model declaration
+    '''
+    Rec_Recipe_Name = models.CharField(null=False,max_length=50)
+    Rec_URL = models.URLField()
 
 class User(models.Model):
     '''
@@ -123,3 +133,4 @@ class Profile(models.Model):
             new_img = (100, 100)
             img.thumbnail(new_img)
             img.save(self.avatar.path)
+            
