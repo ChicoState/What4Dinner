@@ -22,8 +22,17 @@ def user_logout(request):
     return redirect("/")
 
 def home(request):
-    return render(request, "API/home.html")
 
+    '''
+    Random Recipe View.
+    '''
+    recipes = RecomendedRecipes.objects.all()
+    if not recipes:
+        message = "There are no recipes to display."
+        return render(request, 'API/home.html', {'message': message})
+    else:
+        recipe = random.choice(recipes)
+        return render(request, 'API/home.html', {'recipe': recipe})
 
 def about(request):
     return render(request, "API/about.html")
