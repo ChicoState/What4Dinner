@@ -80,7 +80,7 @@ class RecipeSearch(models.Model):
     # Added field for shareable link
     shareable_link = models.URLField(max_length=200, unique=True)
 
-class Create_Recipe(models.Model):
+class CreateRecipe(models.Model):
     Create_RecipeName = models.CharField(null=False,max_length=50)
     Create_Ingrediants=models.CharField(null=False,max_length=300)
     Create_Meal_Type=models.CharField(choices=MEAL_TYPE, max_length=20, null=False)
