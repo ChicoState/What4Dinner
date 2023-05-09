@@ -3,15 +3,16 @@ All views for the website
 '''
 import random
 
-from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
-                      SignUpForm, UpdateProfileForm, UpdateUserForm)
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 
-from .api_data import get_api_data, parse_api_data
+from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
+                      SignUpForm, UpdateProfileForm, UpdateUserForm)
+
+from .API_data import get_api_data, parse_api_data
 from .models import CreateRecipe, RecomendedRecipes
 
 # from django.contrib.auth.forms import SignUp
@@ -32,12 +33,13 @@ def home(request):
     '''
     Random Recipe View.
     '''
-    try:
-        recipe = random.choice(RecomendedRecipes.objects.all())
-    except IndexError:
-        recipe = ""
-    print(recipe)  # make sure that the recipe object is being retrieved correctly
-    return render(request, 'API/home.html', {'recipe': recipe})
+    recipes = RecomendedRecipes.objects.all()
+    if not recipes:
+        message = "There are no recipes to display."
+        return render(request, 'API/home.html', {'message': message})
+    else:
+        recipe = random.choice(recipes)
+        return render(request, 'API/home.html', {'recipe': recipe})
 
 
 def about(request):
@@ -209,6 +211,7 @@ def profile(request):
             return redirect(userprofile)
     user_form = UpdateUserForm(instance=request.user)
     profile_form = UpdateProfileForm(instance=request.user)
+
     return render(request, 'API/editProfile.html',
                   {'user_form': user_form, 'profile_form': profile_form})
 

@@ -6,13 +6,13 @@ Testing can be ran using the following command
 '''
 
 from django.contrib.auth.models import User
-from django.test import SimpleTestCase, TestCase
+from django.test import TestCase
 from django.urls import reverse
 
 # Create your tests here.
 
 
-class UrlTestUnauthenticated(SimpleTestCase):
+class UrlTestUnauthenticated(TestCase):
     '''
     Testing application URL's to ensure that they behave correctly
     when the user is NOT authenticated
