@@ -1,5 +1,8 @@
 '''
 URL Test Suite
+
+Tests URL availability and non-data producing/consuming view rendering.
+
 Testing can be ran using the following command 
 (assuming you are in an activated virtual environment):
 ./manage.py test API
@@ -92,6 +95,22 @@ class UrlTestUnauthenticated(TestCase):
         response = self.client.get(reverse("search"))
         self.assertTemplateNotUsed(response, "API/search.html")
 
+    def test_userProfile_redirect_for_unauthenticated_user(self):
+        """
+        Testing that the login template is used when user tries to
+        access the profile page but is not authenticated
+        """
+        response = self.client.get(reverse("userProfile"))
+        self.assertTemplateNotUsed(response, "API/userprofile.html")
+
+    def test_editProfile_redirect_for_unauthenticated_user(self):
+        """
+        Testign that the login template is used when user tries to
+        access the edit profile page but is not authenticated
+        """
+        response = self.client.get(reverse("editProfile"))
+        self.assertTemplateNotUsed(response, "API/editProfile.html")
+
 
 class UrlTestAuthenticated(TestCase):
     '''
@@ -175,3 +194,19 @@ class UrlTestAuthenticated(TestCase):
         """Testing that the correct template is used on signup url"""
         response = self.client.get(reverse("signup"))
         self.assertTemplateUsed(response, "API/signup.html")
+
+    def test_userprofile_template_name_correct(self):
+        """
+        Testing that the login template is used when user tries to
+        access the profile page and is authenticated
+        """
+        response = self.client.get(reverse("userProfile"))
+        self.assertTemplateUsed(response, "API/userprofile.html")
+
+    def test_editprofile_redirect_for_unauthenticated_user(self):
+        """
+        Testign that the login template is used when user tries to
+        access the edit profile and is authenticated
+        """
+        response = self.client.get(reverse("editProfile"))
+        self.assertTemplateUsed(response, "API/editProfile.html")
