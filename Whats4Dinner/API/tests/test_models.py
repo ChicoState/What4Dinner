@@ -5,9 +5,10 @@ Testing can be ran using the following command
 ./manage.py test API
 '''
 
-from API.models import CreateRecipe, RecipeSearch
 from django.contrib.auth.models import User
 from django.test import TestCase
+
+from API.models import CreateRecipe, RecipeSearch
 
 
 class ModelTest(TestCase):
@@ -38,7 +39,7 @@ class ModelTest(TestCase):
                                            Create_Calories="123000",
                                            Create_Time="45 minutes",
                                            Create_Instruct="1. bake 2. eat",
-                                           Upload_Image="/ Users/jakewest/Desktop/profilePic.jpg")
+                                           Upload_Image="/Users/jakewest/Desktop/profilePic.jpg")
 
     def test_models_smoke_test(self):
         '''smoke test'''
@@ -54,6 +55,19 @@ class ModelTest(TestCase):
         recipe = self.create_custom_recipe()
         self.assertTrue(isinstance(recipe, CreateRecipe))
 
-    def test_save_user_profile(self):
-        '''Tests that a users bio and profile picture are updated correctly'''
+    def test_create_user(self):
+        '''
+        Tests that a users bio and profile picture are updated correctly.
+        The user credentials are declared in setup()
+        '''
+        # check that user was created
+        self.assertEqual(User.objects.count(), 1)
+
+        # check that the users credentials are accurate
+        self.assertEqual(self.user.username, "Jake")
+        self.assertEqual(self.user.email, "test@test.com")
+        self.assertTrue(self.user.check_password('test'))
+
+    def test_user_profile_info_is_set(self):
+        '''Tests that the users username, bio, and profile picture get set correctly'''
         pass
