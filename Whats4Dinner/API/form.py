@@ -52,6 +52,9 @@ class RecipeCreateForm(forms.ModelForm):
     Upload_Image = forms.ImageField()
 
     class Meta():
+        '''
+        Meta Create Recipe fields
+        '''
         model = CreateRecipe
         fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type','Health_Type',
                        'Diet', 'Total_Calories','Time_Needed','Instructions','Upload_Image']
@@ -89,6 +92,9 @@ class UpdateUserForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
+        '''
+        metadata for update user
+        '''
         model = User
         fields = ['username']
 
@@ -100,5 +106,8 @@ class UpdateProfileForm(forms.ModelForm):
     bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
 
     class Meta:
+        '''
+        metadata update profile
+        '''
         model = Profile
         fields = ['image', 'bio']
