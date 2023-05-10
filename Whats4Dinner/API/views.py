@@ -145,6 +145,9 @@ def create(request):
     return render(request, "API/create.html", {'form': RecipeCreateForm()})
 
 def signup(request):
+    '''
+    signup page views
+    '''
     if (request.method == "POST"):
         signup_form = SignUpForm(request.POST)
         if (signup_form.is_valid()):
@@ -160,6 +163,9 @@ def signup(request):
         page_data = { "signup_form": signup_form }
         return render(request, "API/signup.html", page_data)
 def user_login(request):
+    '''
+    user login page view
+    '''
     if(request.method == 'POST'):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -184,6 +190,9 @@ def user_login(request):
 
 @login_required(login_url='/login/')
 def updateProfile(request):
+    '''
+    update user profile page view
+    '''
     if request.method == 'POST':
         updateUser = UpdateUserForm(request.POST, instance=request.user)
         updateProfile = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)

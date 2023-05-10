@@ -81,6 +81,9 @@ class RecipeSearch(models.Model):
     shareable_link = models.URLField(max_length=200, unique=True)
 
 class CreateRecipe(models.Model):
+    '''
+    Recpe create model declaration
+    '''
     Create_RecipeName = models.CharField(null=False,max_length=50)
     Create_Ingrediants=models.CharField(null=False,max_length=300)
     Create_Meal_Type=models.CharField(choices=MEAL_TYPE, max_length=20, null=False)
@@ -99,6 +102,9 @@ class RecomendedRecipes(models.Model):
     Rec_URL = models.URLField()
 
 class Profile(models.Model):
+    '''
+    User Profile model declarations
+    '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     follows = models.ManyToManyField("self", related_name="followed_by", symmetrical=False, blank=True)
     bio = models.TextField(null=False)

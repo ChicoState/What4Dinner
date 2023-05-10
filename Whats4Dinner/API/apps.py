@@ -9,7 +9,6 @@ class UserConfig(AppConfig):
     '''
     User configuration
     '''
-    default_auto_field = 'django.db.models.BigAutoField'
     name = 'users'
 
     def ready(self):

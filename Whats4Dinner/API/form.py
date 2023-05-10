@@ -34,11 +34,10 @@ class RecipeSearchForm(forms.Form):
     Max_Amount_Of_Time = forms.IntegerField(
         widget=forms.NumberInput(), required=False)
 
-    # class Meta():
-    #     model = Recipe_Search
-    #     fields = {'Recipe_Name','Ingrediants','Meal_Type','Health_type',
-    #               'Diet', 'Calories', 'Time'}
 class RecipeCreateForm(forms.ModelForm):
+    '''
+    Create Recipe form fields
+    '''
     Recipe_Name = forms.CharField(widget=forms.TextInput())
     List_Ingredients = forms.CharField(widget=forms.TextInput())
     Meal_Type = forms.CharField(
@@ -53,8 +52,8 @@ class RecipeCreateForm(forms.ModelForm):
     Upload_Image = forms.ImageField()
 
     class Meta():
-            model = CreateRecipe
-            fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type','Health_Type',
+        model = CreateRecipe
+        fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type','Health_Type',
                        'Diet', 'Total_Calories','Time_Needed','Instructions','Upload_Image']
 
 
@@ -83,13 +82,20 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput())
 
 class UpdateUserForm(forms.ModelForm):
-    username = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    '''
+    Update Username
+    '''
+    username = forms.CharField(max_length=100, required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
         fields = ['username']
 
 class UpdateProfileForm(forms.ModelForm):
+    '''
+    Update User profile
+    '''
     image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
     bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
 
