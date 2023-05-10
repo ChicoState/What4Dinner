@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from .models import CreateRecipe, RecomendedRecipes
 from .API_data import get_api_data, parse_api_data
-from decouple import config
+
 
 # from django.contrib.auth.forms import SignUp
 
@@ -169,7 +169,6 @@ def user_login(request):
                 if user.is_active:
                     login(request,user)
                     return redirect(userprofile)
-
                 else:
                     return HttpResponseRedirect("Your account is not setup.")
             else:
@@ -179,7 +178,7 @@ def user_login(request):
         else:
             return render(request, "API/login.html", {"login_form": LoginForm})
     else:
-            return render(request, "API/login.html", {"login_form": LoginForm})
+        return render(request, "API/login.html", {"login_form": LoginForm})
 
 @login_required(login_url='/login/')
 def updateProfile(request):
