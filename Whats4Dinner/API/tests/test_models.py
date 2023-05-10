@@ -5,7 +5,7 @@ Testing can be ran using the following command
 ./manage.py test API
 '''
 
-from API.models import CreateRecipe, RecipeSearch
+from API.models import CreateRecipe, RecipeSearch, RecomendedRecipes
 from django.contrib.auth.models import User
 from django.test import TestCase
 
