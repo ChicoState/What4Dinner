@@ -99,6 +99,50 @@ def search_api(request):
             "form_data": RecipeSearchForm
         }
         return render(request, "API/search.html", context)
+@login_required(login_url='/login/')
+def create(request):
+    '''
+    Create Page view
+    '''
+    if request.method == "POST":
+        create_form = RecipeCreateForm(request.POST, request.FILES)
+        if create_form.is_valid():
+            # Create a Recipe object and set its attributes
+            recipe = create_form.save(commit=False)
+            recipe.Create_RecipeName = create_form.cleaned_data['Recipe_Name']
+            recipe.Create_Ingrediants = create_form.cleaned_data['List_Ingredients']
+            recipe.Create_Meal_Type = create_form.cleaned_data['Meal_Type']
+            recipe.Create_Health_Type = create_form.cleaned_data['Health_Type']
+            recipe.Create_Diet = create_form.cleaned_data['Diet']
+            recipe.Create_Calories = create_form.cleaned_data['Total_Calories']
+            recipe.Create_Time = create_form.cleaned_data['Time_Needed']
+            recipe.Create_Instruct = create_form.cleaned_data['Instructions']
+            recipe.Upload_Image = create_form.cleaned_data['Upload_Image']
+            recipe.save()
+
+            # Set the context with the values of the Recipe object
+            context = {
+                "form": RecipeCreateForm,
+                "Recipe_Name": recipe.Create_RecipeName,
+                "List_Ingredients": recipe.Create_Ingrediants,
+                "Meal_Type": recipe.Create_Meal_Type,
+                "Health_Type": recipe.Create_Health_Type,
+                "Diet": recipe.Create_Diet,
+                "Total_Calories": recipe.Create_Calories,
+                "Time_Needed": recipe.Create_Time,
+                "Instructions": recipe.Create_Instruct,
+                "Upload_Image": recipe.Upload_Image,
+                "message": "Recipe created successfully!",
+            }
+
+             # Add success message to messages framework
+            messages.success(request, 'Recipe created successfully!')
+
+            return render(request, "API/create.html", context)
+        # If the form is not valid, render the form with error messages
+        return render(request, "API/create.html", {'form': create_form})
+    # If it's a GET request, render the form
+    return render(request, "API/create.html", {'form': RecipeCreateForm()})
 
 def signup(request):
     if (request.method == "POST"):
@@ -160,3 +204,12 @@ def updateProfile(request):
     }
 
     return render(request, 'API/updateProfile.html', context)
+
+@login_required(login_url='/login/')
+def recipe_details(request):
+    '''
+    Created Recipe View.
+    '''
+    recipe_obj = CreateRecipe.objects.all()
+    return render (request, 'API/recipes.html',
+    {'recipe_obj': recipe_obj})

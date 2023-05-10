@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 # from django.contrib.auth.models import Create_Recipe
 
-from .models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE, Profile, Create_Recipe
+from .models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE, Profile, CreateRecipe
 
 
 
@@ -53,7 +53,7 @@ class RecipeCreateForm(forms.ModelForm):
     Upload_Image = forms.ImageField()
 
     class Meta():
-            model = Create_Recipe
+            model = CreateRecipe
             fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type','Health_Type',
                        'Diet', 'Total_Calories','Time_Needed','Instructions','Upload_Image']
 
@@ -73,7 +73,6 @@ class SignUpForm(forms.ModelForm):
         help_texts = {
             'username': None
             }
-        }
 
 
 class LoginForm(forms.Form):
