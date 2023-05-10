@@ -1,88 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  {% load static %}
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Whats 4 Dinner</title>
-  {% include 'head.html' %}
-  <style>
-    body {
-      background-image: url("{% static 'CHECK.jpg' %}");
-      background-repeat: no-repeat;
-      background-size: cover;
-      overflow-y: scroll;
-      height: 100%;
-    }
-
-    h1 {
-      margin: auto;
-      background-color: lightblue;
-      border: 1px solid #0a0a0a;
-      border-radius: 10px;
-      width: 1200px;
-      height: 200px;
-      display: flex;
-      align-self: center;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
-</head>
-
-<body>
-  <style>
-    .recipe-container {
-      margin-top: 20;
-      margin: auto;
-      margin-top: 10%;
-      background-color: wheat;
-      border: 1px solid #0a0a0a;
-      border-radius: 5px;
-      width: 450px;
-      height: 300px;
-      display: flex;
-      align-self: center;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .recipe-container h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-    .recipe-container p {
-      font-size: 1.2rem;
-      margin-bottom: 25px;}
-
-    .reci-container {
-      margin-bottom: 25px;
-      text-align: center;}
-
-  </style>
-  {% include 'nav.html' %}
-  <div class="container">
-    <div class="starter-template">
-      <h1 class="text-center" style="color: white; font-size: 88px; text-shadow: -2px 0 black,
-      0 2px black, 2px 0 black, 0 -2px black;"> Welcome to Whats 4 Dinner</h1>
-      <div class="recipe-container">
-        <p class="reci-container"><b>Welcome to What4Dinner! Our webiste allows you can search
-          for recipes based off your prefereces/diet, create and share your own recipes, and
-          view other peoples recipes.</b></p>
-        <h2 style="font-size: 25px;"><u><b>Recomended Recipe!</b></u></h2>
-        {% if recipe %}
-        <p><a href="{{ recipe.Rec_URL }}" target="_blank">{{ recipe.Rec_Recipe_Name }}</a></p>
-        {% else %}
-        <p>No recipe found.</p>
-        {% endif %}
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whats 4 Dinner</title>
+    {% include 'bootstrap.html' %}
+  </head>
+  <body>
+    {% include 'nav.html' %}
+    <div class="container">
+      <div class="starter-template">
+        <h1>Welcome to Whats 4 Dinner</h1>
+        <p class="lead">Placeholder</p>
       </div>
     </div>
-  </div>
-  <!-- /.container -->
-</body>
-
+    <!-- /.container -->
+  </body>
 </html>

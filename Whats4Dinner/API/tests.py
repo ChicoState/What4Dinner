@@ -5,7 +5,6 @@ from django.test import TestCase
 
 # Create your tests here.
 
-
 class BasicTest(TestCase):
     '''
     Basic tests for the application

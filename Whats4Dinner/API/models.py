@@ -3,7 +3,8 @@ Model declarations
 '''
 from django.db import models
 from PIL import Image
-
+from django.contrib.auth.models import User
+from django.db.models import Model
 MEAL_TYPE = [
     ("", "None"),
     ('breakfast', 'Breakfast'),
@@ -100,37 +101,26 @@ class RecomendedRecipes(models.Model):
     Rec_Recipe_Name = models.CharField(null=False,max_length=50)
     Rec_URL = models.URLField()
 
-class User(models.Model):
-    '''
-    Custom User model declaration
-    '''
-    name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254)
-    password = models.CharField(max_length=50)
-    like_recipe = models.URLField(max_length=200)
-    experience = models.CharField(max_length=500)
-    calories_count = models.IntegerField()
-
-
 class Profile(models.Model):
     '''
-    User Profile model declaration
+    User Profile model declarations
     '''
-    user = models.OneToOneField(
-        User, related_name='userprofile', on_delete=models.CASCADE)
-    avatar = models.ImageField(default='default_pfp.png', upload_to='users/')
-    bio = models.TextField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    follows = models.ManyToManyField("self", related_name="followed_by",
+        symmetrical=False, blank=True)
+    bio = models.TextField(null=False)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
         return self.user.username
 
-    def save(self, *args, **kwargs):
+    def save(self):
         super().save()
 
-        img = Image.open(self.avatar.path)
+        img = Image.open(self.image.path)
 
-        if img.height > 100 or img.width > 100:
-            new_img = (100, 100)
-            img.thumbnail(new_img)
-            img.save(self.avatar.path)
-            
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
