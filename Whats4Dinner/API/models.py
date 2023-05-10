@@ -106,7 +106,8 @@ class Profile(models.Model):
     User Profile model declarations
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    follows = models.ManyToManyField("self", related_name="followed_by", symmetrical=False, blank=True)
+    follows = models.ManyToManyField("self", related_name="followed_by",
+        symmetrical=False, blank=True)
     bio = models.TextField(null=False)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 

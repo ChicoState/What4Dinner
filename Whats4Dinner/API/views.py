@@ -1,3 +1,6 @@
+'''
+All views for the website
+'''
 import random
 from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
                       UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
@@ -8,8 +11,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from .models import CreateRecipe, RecomendedRecipes
 from .API_data import get_api_data, parse_api_data
-import urllib.parse
-
 from decouple import config
 
 # from django.contrib.auth.forms import SignUp
@@ -18,6 +19,9 @@ from decouple import config
 
 @login_required(login_url='/login/')
 def user_logout(request):
+    '''
+    User logout view
+    '''
     logout(request)
     return redirect("/")
 
@@ -35,70 +39,59 @@ def home(request):
         return render(request, 'API/home.html', {'recipe': recipe})
 
 def about(request):
+    '''
+    About page view
+    '''
     return render(request, "API/about.html")
-
-# def search_api(request):
-#     print(request.body)
-#     endpoint = "https://api.edamam.com/api/recipes/v2"
-#     query = request.body
-#     app_id = config("RECPIE_APPLICATION_ID")
-#     secret_key = config("RECIPE_SEARCH_API_KEY")
-#     # https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=f93954c5&app_key=76167920eae1f7ffb1d134d573e1b9a0%20
-#     url = urllib.parse.quote_plus(
-#         endpoint+"?type=public"+"&q="+query+"&app_id="+app_id+"&app_key="+secret_key)
-#     print(url)
-
-def search(request):
-    if request.method == "POST":
-        search_api(request)
-    return render(request, "API/search.html")
 
 @login_required(login_url='/login/')
 def userprofile(request):
+    '''
+    User profile view
+    '''
     return render(request, "API/userprofile.html")
 
 
-def search_api(request):
-    print(request.body)
-    endpoint = "https://api.edamam.com/api/recipes/v2"
-    query = request.body
-    app_id = config("RECPIE_APPLICATION_ID")
-    secret_key = config("RECIPE_SEARCH_API_KEY")
-    # https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=f93954c5&app_key=76167920eae1f7ffb1d134d573e1b9a0%20
-    url = urllib.parse.quote_plus(
-        endpoint+"?type=public"+"&q="+query+"&app_id="+app_id+"&app_key="+secret_key)
-    print(url)
-    if (request.method== "POST"):
+@login_required(login_url='/login/')
+def search(request):
+    '''
+    Search page view
+    '''
+    if request.method == "POST":
         form = RecipeSearchForm(request.POST)
         if form.is_valid():
-            text = form.cleaned_data['Recipe_Name']
-            text2 = form.cleaned_data['Ingrediants']
-            text3 = form.cleaned_data['Meal_Type']
-            text4 = form.cleaned_data['Diet']
-            text5 = form.cleaned_data['Calories']
-            text6 = form.cleaned_data['Time']
-            print(text)
-            print(text2)
-            print(text3)
-            print(text4)
-            print(text5)
-            print(text6)
-        context = {
-            "form_data": RecipeSearchForm,
-            "Recipe_Name": text,
-            "Ingrediants": text2,
-            "Meal_Type": text3,
-            "Diet": text4,
-            "Calories": text5,
-            "Time": text6
-        }
-        return render(request, "API/search.html", context)
-
-    else:
+            recipe_name = form.cleaned_data['Recipe_Name']
+            num_of_ingredients = form.cleaned_data['Number_Of_Ingredients']
+            meal_type = form.cleaned_data['Meal_Type']
+            health_type = form.cleaned_data['Health_Type']
+            diet = form.cleaned_data['Diet']
+            calories = form.cleaned_data['Calorie_Range']
+            time = form.cleaned_data['Max_Amount_Of_Time']
+            res = get_api_data(query=recipe_name,
+                               num_of_ingredients=num_of_ingredients,
+                               diet_type=diet,
+                               health_type=health_type,
+                               meal_type=meal_type,
+                               calories=calories,
+                               time=time)
+            parsed_data = parse_api_data(res.json())
+            # Sorts the recipes by recipe name
+            # parsed_data.sort(key=lambda x: x['label'], reverse=False)
+            context = {
+                "form_data": RecipeSearchForm,
+                "num_results": len(parsed_data),
+                "parsed_data": parsed_data,
+            }
+            return render(request, "API/search.html", context)
         context = {
             "form_data": RecipeSearchForm
         }
         return render(request, "API/search.html", context)
+
+    context = {
+        "form_data": RecipeSearchForm
+    }
+    return render(request, "API/search.html", context)
 @login_required(login_url='/login/')
 def create(request):
     '''
@@ -195,7 +188,8 @@ def updateProfile(request):
     '''
     if request.method == 'POST':
         updateUser = UpdateUserForm(request.POST, instance=request.user)
-        updateProfile = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        updateProfile = UpdateProfileForm(request.POST,
+            request.FILES, instance=request.user.profile)
 
         if updateUser.is_valid() and updateProfile.is_valid():
             updateUser.save()
