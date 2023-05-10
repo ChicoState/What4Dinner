@@ -1,3 +1,6 @@
+'''
+Test suite for API functionality.
+'''
 from django.test import TestCase
 
 from API import API_data as api
