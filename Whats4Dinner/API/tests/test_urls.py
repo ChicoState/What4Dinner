@@ -69,6 +69,16 @@ class UrlTestUnauthenticated(TestCase):
         response = self.client.get(reverse("logout"))
         self.assertEqual(response.status_code, 302)
 
+    def test_url_exists_at_correct_location_test_create_url(self):
+        """Test access to the create url"""
+        response = self.client.get(reverse("create"))
+        self.assertEqual(response.status_code, 302)
+
+    def test_url_exists_at_correct_location_test_recipes_url(self):
+        """Test access to the recipes url"""
+        response = self.client.get(reverse("recipes"))
+        self.assertEqual(response.status_code, 302)
+
     # Test that correct templates are used for each endpoint
 
     def test_home_template_name_correct(self):
@@ -153,6 +163,16 @@ class UrlTestAuthenticated(TestCase):
         """Test access to the logout url"""
         response = self.client.get(reverse("logout"))
         self.assertEqual(response.status_code, 302)
+
+    def test_url_exists_at_correct_location_test_create_url(self):
+        """Test access to the create url"""
+        response = self.client.get(reverse("create"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_exists_at_correct_location_test_recipes_url(self):
+        """Test access to the recipes url"""
+        response = self.client.get(reverse("recipes"))
+        self.assertEqual(response.status_code, 200)
 
     # Test that correct templates are used for each endpoint
 
