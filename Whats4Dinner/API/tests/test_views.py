@@ -6,7 +6,8 @@ Testing can be ran using the following command
 '''
 
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.db import transaction
+from django.test import TestCase, TransactionTestCase, Client, override_settings
 from django.urls import reverse
 from API.models import RecomendedRecipes, CreateRecipe
 
@@ -22,6 +23,8 @@ from django.test import TestCase
 from API.models import RecomendedRecipes
 
 
+# Enable debug mode to show detailed error messages during tests
+@override_settings(DEBUG=True)
 class ViewTest(TestCase):
     '''Class for Views'''
 
@@ -92,12 +95,53 @@ class ViewTest(TestCase):
     #     url = reverse('create')
     #     response = self.client.post(url, data)
     #     self.assertEqual(response.status_code, 200)
-    #     self.assertTrue(CreateRecipe.objects.filter(
-    #         Create_RecipeName='Test Recipe').exists())
-    #     self.assertContains(response, 'Recipe created successfully!')
 
-    
+    #     # Check if the recipe is created
+    #     recipe_exists = CreateRecipe.objects.filter(
+    #         Create_RecipeName='Test Recipe').exists()
+    #     self.assertTrue(recipe_exists, "Recipe was not created")
 
+    #     # Get the created recipe
+    #     created_recipe = CreateRecipe.objects.get(Create_RecipeName='Test Recipe')
+    #     self.assertEqual(created_recipe.Create_Ingrediants, 'Test Ingredient 1, Test Ingredient 2')
+    #     # Add more assertions for other fields as needed
 
+    #     # Assert the filtered queryset against an expected value for detailed failure output
+    #     expected_queryset = [created_recipe]
+    #     self.assertQuerysetEqual(
+    #         CreateRecipe.objects.filter(Create_RecipeName='Test Recipe'),
+    #         expected_queryset,
+    #         transform=lambda x: x,
+    #         ordered=False,
+    #         msg="The filtered queryset does not match the expected queryset."
+    #     )
 
+        # self.assertContains(response, 'Recipe created successfully!')
 
+    def test_recipe_details_no_objects(self):
+        '''
+        Test the recipe_details view when there are no recipe objects.
+        '''
+        url = reverse('recipes')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'API/recipes.html')
+        self.assertQuerysetEqual(response.context['recipe_obj'], [])
+
+    # def test_recipe_details_with_objects(self):
+    #     '''
+    #     Test the recipe_details view when there are recipe objects.
+    #     '''
+    #     # Create recipe objects for testing
+    #     recipe1 = CreateRecipe.objects.create(Create_RecipeName='Recipe 1')
+    #     recipe2 = CreateRecipe.objects.create(Create_RecipeName='Recipe 2')
+
+    #     url = reverse('recipes')
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'API/recipes.html')
+    #     self.assertQuerysetEqual(
+    #         response.context['recipe_obj'],
+    #         [repr(recipe1), repr(recipe2)],
+    #         ordered=False
+    #     )
