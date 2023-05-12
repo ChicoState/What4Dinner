@@ -34,12 +34,12 @@ def home(request):
     Random Recipe View.
     '''
     recipes = RecomendedRecipes.objects.all()
-    if not recipes:
-        message = "There are no recipes to display."
-        return render(request, 'API/home.html', {'message': message})
-    else:
+    try:
         recipe = random.choice(recipes)
-        return render(request, 'API/home.html', {'recipe': recipe})
+    except IndexError:
+        recipe = None
+    context = {'recipe': recipe, 'message': 'There are no recipes to display.'}
+    return render(request, 'API/home.html', context)
 
 
 def about(request):

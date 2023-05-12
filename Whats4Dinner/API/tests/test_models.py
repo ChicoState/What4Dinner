@@ -8,7 +8,7 @@ Testing can be ran using the following command
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from API.models import CreateRecipe, RecipeSearch, RecomendedRecipes
+from API.models import CreateRecipe, RecipeSearch
 
 
 class ModelTest(TestCase):
