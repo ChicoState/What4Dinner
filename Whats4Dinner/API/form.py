@@ -73,7 +73,7 @@ class SignUpForm(forms.ModelForm):
         help_texts = {
             'username': None
             }
-        }
+        
 
 
 class LoginForm(forms.Form):
