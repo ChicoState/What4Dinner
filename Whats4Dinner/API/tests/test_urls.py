@@ -95,7 +95,7 @@ class UrlTestUnauthenticated(TestCase):
         response = self.client.get(reverse("search"))
         self.assertTemplateNotUsed(response, "API/search.html")
 
-    def test_userProfile_redirect_for_unauthenticated_user(self):
+    def test_userprofile_redirect_for_unauthenticated_user(self):
         """
         Testing that the login template is used when user tries to
         access the profile page but is not authenticated
@@ -103,7 +103,7 @@ class UrlTestUnauthenticated(TestCase):
         response = self.client.get(reverse("userProfile"))
         self.assertTemplateNotUsed(response, "API/userprofile.html")
 
-    def test_editProfile_redirect_for_unauthenticated_user(self):
+    def test_editprofile_redirect_for_unauthenticated_user(self):
         """
         Testign that the login template is used when user tries to
         access the edit profile page but is not authenticated
