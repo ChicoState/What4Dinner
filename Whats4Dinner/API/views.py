@@ -219,6 +219,5 @@ def recipe_details(request):
     '''
     Created Recipe View.
     '''
-    recipe_obj = CreateRecipe.objects.all()
-    return render (request, 'API/recipes.html',
-    {'recipe_obj': recipe_obj})
+    recipes = CreateRecipe.objects.all()
+    return render(request, 'API/recipes.html', {'recipes': recipes})
