@@ -58,14 +58,6 @@ def userprofile(request):
 
 
 @login_required(login_url='/login/')
-def edit_profile(request):
-    '''
-    Edit profile view
-    '''
-    return render(request, "API/editProfile.html")
-
-
-@login_required(login_url='/login/')
 def search(request):
     '''
     Search page view
@@ -154,27 +146,29 @@ def create(request):
 
 def signup(request):
     '''
-    User signup view
+    signup page views
     '''
-    if request.method == "POST":
+    if (request.method == "POST"):
         signup_form = SignUpForm(request.POST)
-        if signup_form.is_valid():
+        if (signup_form.is_valid()):
             user = signup_form.save()
             user.set_password(user.password)
             user.save()
-            return render(request, "API/login.html")
+            return redirect("/")
+        else:
+            page_data = {"signup_form": signup_form}
+            return render(request, "API/signup.html", page_data)
+    else:
+        signup_form = SignUpForm()
         page_data = {"signup_form": signup_form}
         return render(request, "API/signup.html", page_data)
-    signup_form = SignUpForm()
-    page_data = {"signup_form": signup_form}
-    return render(request, "API/signup.html", page_data)
 
 
 def user_login(request):
     '''
-    User login view
+    user login page view
     '''
-    if request.method == 'POST':
+    if (request.method == 'POST'):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = login_form.cleaned_data["username"]
@@ -184,36 +178,45 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     return redirect(userprofile)
-                return HttpResponseRedirect("There is no account \
-                                            associated with that username.")
-            print("Someone tried to login and failed.")
-            print(
-                f"They used username: {username} and password: {password}")
-            return render(request, 'API/login.html', {"login_form": LoginForm})
+                else:
+                    return HttpResponseRedirect("Your account is not setup.")
+            else:
+                print("Someone tried to login and failed.")
+                print("They used username: {} and password: {}".format(
+                    username, password))
+                return render(request, 'API/login.html', {"login_form": LoginForm})
+        else:
+            return render(request, "API/login.html", {"login_form": LoginForm})
+    else:
         return render(request, "API/login.html", {"login_form": LoginForm})
-    return render(request, "API/login.html", {"login_form": LoginForm})
 
 
 @login_required(login_url='/login/')
-def profile(request):
+def updateProfile(request):
     '''
-    User profile view.
+    update user profile page view
     '''
     if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateProfileForm(
-            request.POST, request.FILES, instance=request.user)
+        updateUser = UpdateUserForm(request.POST, instance=request.user)
+        updateProfile = UpdateProfileForm(request.POST,
+                                          request.FILES, instance=request.user.profile)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect(userprofile)
-    user_form = UpdateUserForm(instance=request.user)
-    profile_form = UpdateProfileForm(instance=request.user)
+        if updateUser.is_valid() and updateProfile.is_valid():
+            updateUser.save()
+            updateProfile.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect(userprofile)  # Redirect back to profile page
 
-    return render(request, 'API/editProfile.html',
-                  {'user_form': user_form, 'profile_form': profile_form})
+    else:
+        updateUser = UpdateUserForm(instance=request.user)
+        updateProfile = UpdateProfileForm(instance=request.user.profile)
+
+    context = {
+        'updateUser': updateUser,
+        'updateProfile': updateProfile
+    }
+
+    return render(request, 'API/updateProfile.html', context)
 
 
 @login_required(login_url='/login/')
