@@ -150,18 +150,17 @@ def signup(request):
             user.set_password(user.password)
             user.save()
             return redirect("/")
-        else:
-            page_data = { "signup_form": signup_form }
-            return render(request, "API/signup.html", page_data)
-    else:
-        signup_form = SignUpForm()
         page_data = { "signup_form": signup_form }
         return render(request, "API/signup.html", page_data)
+    signup_form = SignUpForm()
+    page_data = { "signup_form": signup_form }
+    return render(request, "API/signup.html", page_data)
+  
 def user_login(request):
     '''
     user login page view
     '''
-    if(request.method == 'POST'):
+    if request.method == 'POST:
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = login_form.cleaned_data["username"]
@@ -171,16 +170,13 @@ def user_login(request):
                 if user.is_active:
                     login(request,user)
                     return redirect("/")
-                else:
-                    return HttpResponseRedirect("Your account is not setup.")
-            else:
-                print("Someone tried to login and failed.")
-                print("They used username: {} and password: {}".format(username,password))
-                return render(request, 'API/login.html', {"login_form": LoginForm})
-        else:
-            return render(request, "API/login.html", {"login_form": LoginForm})
-    else:
+                
+                return HttpResponseRedirect("Your account is not setup.")
+            print("Someone tried to login and failed.")
+            print("They used username: {} and password: {}".format(username,password))
+            return render(request, 'API/login.html', {"login_form": LoginForm})
         return render(request, "API/login.html", {"login_form": LoginForm})
+    return render(request, "API/login.html", {"login_form": LoginForm})
 
 @login_required(login_url='/login/')
 def updateProfile(request):
@@ -197,10 +193,8 @@ def updateProfile(request):
             updateProfile.save()
             messages.success(request, f'Your account has been updated!')
             return redirect(userprofile) # Redirect back to profile page
-
-    else:
-        updateUser = UpdateUserForm(instance=request.user)
-        updateProfile = UpdateProfileForm(instance=request.user.profile)
+    updateUser = UpdateUserForm(instance=request.user)
+    updateProfile = UpdateProfileForm(instance=request.user.profile)
 
     context = {
         'updateUser': updateUser,
