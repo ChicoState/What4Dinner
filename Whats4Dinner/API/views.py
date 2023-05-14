@@ -34,9 +34,8 @@ def home(request):
     if not recipes:
         message = "There are no recipes to display."
         return render(request, 'API/home.html', {'message': message})
-    else:
-        recipe = random.choice(recipes)
-        return render(request, 'API/home.html', {'recipe': recipe})
+    recipe = random.choice(recipes)
+    return render(request, 'API/home.html', {'recipe': recipe})
 
 def about(request):
     '''
@@ -155,7 +154,7 @@ def signup(request):
     signup_form = SignUpForm()
     page_data = { "signup_form": signup_form }
     return render(request, "API/signup.html", page_data)
-  
+
 def user_login(request):
     '''
     user login page view
@@ -170,7 +169,6 @@ def user_login(request):
                 if user.is_active:
                     login(request,user)
                     return redirect("/")
-                
                 return HttpResponseRedirect("Your account is not setup.")
             print("Someone tried to login and failed.")
             print("They used username: {} and password: {}".format(username,password))
@@ -179,26 +177,27 @@ def user_login(request):
     return render(request, "API/login.html", {"login_form": LoginForm})
 
 @login_required(login_url='/login/')
-def updateProfile(request):
+def updateprofile(request):
     '''
     update user profile page view
     '''
     if request.method == 'POST':
-        updateUser = UpdateUserForm(request.POST, instance=request.user)
-        updateProfile = UpdateProfileForm(request.POST,
+        updateuser = UpdateUserForm(request.POST, instance=request.user)
+        updateprofile = UpdateProfileForm(request.POST,
             request.FILES, instance=request.user.profile)
 
-        if updateUser.is_valid() and updateProfile.is_valid():
-            updateUser.save()
-            updateProfile.save()
+        if updateuser.is_valid() and updateprofile.is_valid():
+            updateuser.save()
+            updateprofile.save()
             messages.success(request, f'Your account has been updated!')
             return redirect(userprofile) # Redirect back to profile page
-    updateUser = UpdateUserForm(instance=request.user)
-    updateProfile = UpdateProfileForm(instance=request.user.profile)
+
+    updateuser = UpdateUserForm(instance=request.user)
+    updateprofile = UpdateProfileForm(instance=request.user.profile)
 
     context = {
-        'updateUser': updateUser,
-        'updateProfile': updateProfile
+        'updateUser': updateuser,
+        'updateProfile': updateprofile
     }
 
     return render(request, 'API/updateProfile.html', context)

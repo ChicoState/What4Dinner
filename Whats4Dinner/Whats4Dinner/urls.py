@@ -28,7 +28,7 @@ urlpatterns = [
     path('search/', api_views.search),
     path('signup/', api_views.signup),
     path('login/', api_views.user_login),
-    path('updateProfile/', api_views.updateProfile),
+    path('updateProfile/', api_views.updateprofile),
     path('userprofile/', api_views.userprofile),
     path('logout/', api_views.user_logout),
     path('create/', api_views.create),

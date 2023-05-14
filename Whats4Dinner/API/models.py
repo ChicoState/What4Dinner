@@ -1,11 +1,11 @@
 '''
 Model declarations
 '''
-from django.db import models
 from PIL import Image
+from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Model
 from django.db.models.signals import post_save
+
 
 MEAL_TYPE = [
     ("", "None"),
@@ -114,9 +114,11 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
+        '''Initialization of self'''
         return self.user.username
 
     def save(self):
+        '''Saving User photos'''
         super().save()
 
         img = Image.open(self.image.path)
@@ -127,6 +129,7 @@ class Profile(models.Model):
             img.save(self.image.path)
 
 def create_profile(sender, instance, created, **kwargs):
+    '''Creating User Profile'''
     if created:
         user_profile = Profile(user=instance)
         user_profile.save()
