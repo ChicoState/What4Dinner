@@ -15,6 +15,14 @@ class RecipeSearchForm(forms.Form):
     Recipe search form fields
     '''
     Recipe_Name = forms.CharField(widget=forms.TextInput())
+    Ingrediants = forms.CharField(widget=forms.TextInput())
+    Meal_Type = forms.CharField(
+        label='Meal Type', widget=forms.Select(choices=MEAL_TYPE))
+    # Health_type=forms.CharField(max_length=40)
+    Diet = forms.CharField(
+        label='Diet Type', widget=forms.Select(choices=DIET_TYPE))
+    Calories = forms.IntegerField(widget=forms.NumberInput())
+    Time = forms.IntegerField(widget=forms.NumberInput())
     Number_Of_Ingredients = forms.CharField(
         widget=forms.TextInput(), required=False)
     Meal_Type = forms.CharField(
@@ -81,16 +89,14 @@ class LoginForm(forms.Form):
 
 class UpdateUserForm(forms.ModelForm):
     '''
-    Update user fields
+    Update Username
     '''
-    username = forms.CharField(max_length=100, required=True, widget=forms.TextInput(
-        attrs={'class': 'form-control'}))
-    # email = forms.EmailField(required=True,
-    # widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(max_length=100, required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         '''
-        User metadata
+        metadata for update user
         '''
         model = User
         fields = ['username']
@@ -98,16 +104,16 @@ class UpdateUserForm(forms.ModelForm):
 
 class UpdateProfileForm(forms.ModelForm):
     '''
-    Update profile fields
+    Update User profile
     '''
-    avatar = forms.ImageField(widget=forms.FileInput(
+    image = forms.ImageField(widget=forms.FileInput(
         attrs={'class': 'form-control-file'}))
     bio = forms.CharField(widget=forms.Textarea(
         attrs={'class': 'form-control', 'rows': 5}))
 
     class Meta:
         '''
-        Metadata for updating the user's profile
+        metadata update profile
         '''
         model = Profile
-        fields = ['avatar', 'bio']
+        fields = ['image', 'bio']
