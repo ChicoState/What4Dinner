@@ -1,9 +1,10 @@
 '''
 Model declarations
 '''
+
 from django.contrib.auth.models import User
-from django.db import models
-from PIL import Image
+from django.db.models import Model
+from django.db.models.signals import post_save
 
 MEAL_TYPE = [
     ("", "None"),
@@ -127,7 +128,14 @@ class Profile(models.Model):
 
         img = Image.open(self.image.path)
 
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
+        if img.height > 200 or img.width > 200:
+            output_size = (200, 200)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        user_profile = Profile(user=instance)
+        user_profile.save()
+
+post_save.connect(create_profile, sender=User)

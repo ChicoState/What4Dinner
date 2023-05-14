@@ -54,7 +54,9 @@ def userprofile(request):
     '''
     User profile view
     '''
-    return render(request, "API/userprofile.html")
+    recipe_obj = CreateRecipe.objects.all()
+    return render(request, "API/userprofile.html",
+     {'recipe_obj': recipe_obj})
 
 
 @login_required(login_url='/login/')
@@ -176,8 +178,10 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-                    login(request, user)
-                    return redirect(userprofile)
+
+                    login(request,user)
+                    return redirect("/")
+
                 else:
                     return HttpResponseRedirect("Your account is not setup.")
             else:
