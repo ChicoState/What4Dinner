@@ -2,23 +2,20 @@
 All views for the website
 '''
 import random
-
+from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
+                      UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-
-from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
-                      SignUpForm, UpdateProfileForm, UpdateUserForm)
-
-from .API_data import get_api_data, parse_api_data
 from .models import CreateRecipe, RecomendedRecipes
+from .API_data import get_api_data, parse_api_data
+
 
 # from django.contrib.auth.forms import SignUp
 
 # Create your views here.
-
 
 @login_required(login_url='/login/')
 def user_logout(request):
@@ -28,8 +25,8 @@ def user_logout(request):
     logout(request)
     return redirect("/")
 
-
 def home(request):
+
     '''
     Random Recipe View.
     '''
@@ -41,13 +38,11 @@ def home(request):
         recipe = random.choice(recipes)
         return render(request, 'API/home.html', {'recipe': recipe})
 
-
 def about(request):
     '''
     About page view
     '''
     return render(request, "API/about.html")
-
 
 @login_required(login_url='/login/')
 def userprofile(request):
@@ -56,7 +51,7 @@ def userprofile(request):
     '''
     recipe_obj = CreateRecipe.objects.all()
     return render(request, "API/userprofile.html",
-                  {'recipe_obj': recipe_obj})
+     {'recipe_obj': recipe_obj})
 
 
 @login_required(login_url='/login/')
@@ -94,12 +89,11 @@ def search(request):
             "form_data": RecipeSearchForm
         }
         return render(request, "API/search.html", context)
+
     context = {
         "form_data": RecipeSearchForm
     }
     return render(request, "API/search.html", context)
-
-
 @login_required(login_url='/login/')
 def create(request):
     '''
@@ -136,7 +130,7 @@ def create(request):
                 "message": "Recipe created successfully!",
             }
 
-            # Add success message to messages framework
+             # Add success message to messages framework
             messages.success(request, 'Recipe created successfully!')
 
             return render(request, "API/create.html", context)
@@ -144,7 +138,6 @@ def create(request):
         return render(request, "API/create.html", {'form': create_form})
     # If it's a GET request, render the form
     return render(request, "API/create.html", {'form': RecipeCreateForm()})
-
 
 def signup(request):
     '''
@@ -157,13 +150,12 @@ def signup(request):
             user.set_password(user.password)
             user.save()
             return redirect("/")
-        page_data = {"signup_form": signup_form}
+        page_data = { "signup_form": signup_form }
         return render(request, "API/signup.html", page_data)
     signup_form = SignUpForm()
-    page_data = {"signup_form": signup_form}
+    page_data = { "signup_form": signup_form }
     return render(request, "API/signup.html", page_data)
-
-
+  
 def user_login(request):
     '''
     user login page view
@@ -176,43 +168,40 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-                    login(request, user)
+                    login(request,user)
                     return redirect("/")
+                
                 return HttpResponseRedirect("Your account is not setup.")
             print("Someone tried to login and failed.")
-            print(f"They used username: {username} and password: {password}")
+            print("They used username: {} and password: {}".format(username,password))
             return render(request, 'API/login.html', {"login_form": LoginForm})
         return render(request, "API/login.html", {"login_form": LoginForm})
     return render(request, "API/login.html", {"login_form": LoginForm})
 
-
 @login_required(login_url='/login/')
-def update_profile(request):
+def updateProfile(request):
     '''
     update user profile page view
     '''
     if request.method == 'POST':
-        update_user = UpdateUserForm(request.POST, instance=request.user)
-        update_user_profile = UpdateProfileForm(request.POST,
-                                                request.FILES, instance=request.user.profile)
+        updateUser = UpdateUserForm(request.POST, instance=request.user)
+        updateProfile = UpdateProfileForm(request.POST,
+            request.FILES, instance=request.user.profile)
 
-        if update_user.is_valid() and update_user_profile.is_valid():
-            update_user.save()
-            update_user_profile.save()
-            messages.success(request, 'Your account has been updated!')
-            return redirect(userprofile)  # Redirect back to profile page
-
-    else:
-        update_user = UpdateUserForm(instance=request.user)
-        update_user_profile = UpdateProfileForm(instance=request.user.profile)
+        if updateUser.is_valid() and updateProfile.is_valid():
+            updateUser.save()
+            updateProfile.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect(userprofile) # Redirect back to profile page
+    updateUser = UpdateUserForm(instance=request.user)
+    updateProfile = UpdateProfileForm(instance=request.user.profile)
 
     context = {
-        'updateUser': update_user,
-        'updateProfile': update_user_profile
+        'updateUser': updateUser,
+        'updateProfile': updateProfile
     }
 
     return render(request, 'API/updateProfile.html', context)
-
 
 @login_required(login_url='/login/')
 def recipe_details(request):
@@ -220,5 +209,5 @@ def recipe_details(request):
     Created Recipe View.
     '''
     recipe_obj = CreateRecipe.objects.all()
-    return render(request, 'API/recipes.html',
-                  {'recipe_obj': recipe_obj})
+    return render (request, 'API/recipes.html',
+    {'recipe_obj': recipe_obj})
