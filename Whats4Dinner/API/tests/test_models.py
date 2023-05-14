@@ -67,7 +67,3 @@ class ModelTest(TestCase):
         self.assertEqual(self.user.username, "Jake")
         self.assertEqual(self.user.email, "test@test.com")
         self.assertTrue(self.user.check_password('test'))
-
-    def test_user_profile_info_is_set(self):
-        '''Tests that the users username, bio, and profile picture get set correctly'''
-        pass

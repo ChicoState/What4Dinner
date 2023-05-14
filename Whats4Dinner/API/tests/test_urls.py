@@ -111,6 +111,16 @@ class UrlTestUnauthenticated(TestCase):
         response = self.client.get(reverse("editProfile"))
         self.assertTemplateNotUsed(response, "API/editProfile.html")
 
+    def test_url_exists_at_correct_location_test_create_url(self):
+        """Test access to the create url"""
+        response = self.client.get(reverse("create"))
+        self.assertEqual(response.status_code, 302)
+
+    def test_url_exists_at_correct_location_test_recipes_url(self):
+        """Test access to the recipes url"""
+        response = self.client.get(reverse("recipes"))
+        self.assertEqual(response.status_code, 302)
+
 
 class UrlTestAuthenticated(TestCase):
     '''
@@ -210,3 +220,13 @@ class UrlTestAuthenticated(TestCase):
         """
         response = self.client.get(reverse("editProfile"))
         self.assertTemplateUsed(response, "API/editProfile.html")
+
+    def test_url_exists_at_correct_location_test_create_url(self):
+        """Test access to the create url"""
+        response = self.client.get(reverse("create"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_exists_at_correct_location_test_recipes_url(self):
+        """Test access to the recipes url"""
+        response = self.client.get(reverse("recipes"))
+        self.assertEqual(response.status_code, 200)
