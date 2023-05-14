@@ -4,10 +4,11 @@ Forms for the application
 
 from django import forms
 from django.contrib.auth.models import User
-
-from .models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE, CreateRecipe, Profile
-
+#from django.forms import ModelForm
 # from django.contrib.auth.models import Create_Recipe
+
+from .models import DIET_TYPE, HEALTH_TYPE, MEAL_TYPE, Profile, CreateRecipe
+
 
 
 class RecipeSearchForm(forms.Form):
@@ -15,14 +16,12 @@ class RecipeSearchForm(forms.Form):
     Recipe search form fields
     '''
     Recipe_Name = forms.CharField(widget=forms.TextInput())
-    Ingrediants = forms.CharField(widget=forms.TextInput())
-    Meal_Type = forms.CharField(
-        label='Meal Type', widget=forms.Select(choices=MEAL_TYPE))
+    Ingrediants=forms.CharField(widget=forms.TextInput())
+    Meal_Type=forms.CharField(label= 'Meal Type', widget= forms.Select(choices=MEAL_TYPE))
     # Health_type=forms.CharField(max_length=40)
-    Diet = forms.CharField(
-        label='Diet Type', widget=forms.Select(choices=DIET_TYPE))
-    Calories = forms.IntegerField(widget=forms.NumberInput())
-    Time = forms.IntegerField(widget=forms.NumberInput())
+    Diet=forms.CharField(label= 'Diet Type', widget=forms.Select(choices=DIET_TYPE))
+    Calories=forms.IntegerField(widget=forms.NumberInput())
+    Time=forms.IntegerField(widget=forms.NumberInput())
     Number_Of_Ingredients = forms.CharField(
         widget=forms.TextInput(), required=False)
     Meal_Type = forms.CharField(
@@ -34,7 +33,6 @@ class RecipeSearchForm(forms.Form):
     Calorie_Range = forms.CharField(widget=forms.TextInput(), required=False)
     Max_Amount_Of_Time = forms.IntegerField(
         widget=forms.NumberInput(), required=False)
-
 
 class RecipeCreateForm(forms.ModelForm):
     '''
@@ -58,8 +56,8 @@ class RecipeCreateForm(forms.ModelForm):
         Meta Create Recipe fields
         '''
         model = CreateRecipe
-        fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type', 'Health_Type',
-                  'Diet', 'Total_Calories', 'Time_Needed', 'Instructions', 'Upload_Image']
+        fields = ['Recipe_Name', 'List_Ingredients', 'Meal_Type','Health_Type',
+                       'Diet', 'Total_Calories','Time_Needed','Instructions','Upload_Image']
 
 
 class SignUpForm(forms.ModelForm):
@@ -76,7 +74,7 @@ class SignUpForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'username', 'email', 'password')
         help_texts = {
             'username': None
-        }
+            }
 
 
 class LoginForm(forms.Form):
@@ -86,13 +84,12 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
 
-
 class UpdateUserForm(forms.ModelForm):
     '''
     Update Username
     '''
     username = forms.CharField(max_length=100, required=True,
-                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         '''
@@ -101,15 +98,12 @@ class UpdateUserForm(forms.ModelForm):
         model = User
         fields = ['username']
 
-
 class UpdateProfileForm(forms.ModelForm):
     '''
     Update User profile
     '''
-    image = forms.ImageField(widget=forms.FileInput(
-        attrs={'class': 'form-control-file'}))
-    bio = forms.CharField(widget=forms.Textarea(
-        attrs={'class': 'form-control', 'rows': 5}))
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
 
     class Meta:
         '''
