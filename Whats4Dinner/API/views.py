@@ -143,9 +143,9 @@ def signup(request):
     '''
     signup page views
     '''
-    if (request.method == "POST"):
+    if request.method == "POST":
         signup_form = SignUpForm(request.POST)
-        if (signup_form.is_valid()):
+        if signup_form.is_valid():
             user = signup_form.save()
             user.set_password(user.password)
             user.save()
@@ -160,7 +160,7 @@ def user_login(request):
     '''
     user login page view
     '''
-    if request.method == 'POST:
+    if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = login_form.cleaned_data["username"]
