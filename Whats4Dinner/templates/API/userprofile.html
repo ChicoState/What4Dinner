@@ -12,79 +12,99 @@
   </style>
 </head>
 <style>
-body {
-  background-image: url("{% static 'profileBack.jpg' %}");
-  background-repeat: repeat;
-  background-size: cover;
-  overflow-y: scroll;
-  height: 100%;
-}
+  body {
+    background-image: url("{% static 'profileBack.jpg' %}");
+    background-repeat: repeat;
+    background-size: cover;
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  .profile-picture {
+    object-fit: cover;
+  }
+
+  h1 {
+    margin: auto;
+    background-color: lightblue;
+    border: 1px solid #0a0a0a;
+    border-radius: 10px;
+    width: 800px;
+    height: 150px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
 
+<h1 class="text-center" style="color: white; font-size: 75px; text-shadow: -2px 0 black,
+  0 2px black, 2px 0 black, 0 -2px black;">Profile!</h1>
 <section class="h-100 gradient-custom-2">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-lg-9 col-xl-7">
-        <div class="card">
-          <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
-            <div class="ms-4 mt-5 d-flex flex-column" style="width: 200px;">
-              <img src="{{ user.profile.image.url }} " alt="Generic placeholder image"
-               class="img-fluid img-thumbnail mt-4 mb-2" style="width: 200px; z-index: 10">
-              <button onclick="location.href=/updateProfile/" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
-                style="z-index: 1;">
-                Edit Profile
-              </button>
+        <div class="card" style="border: 10px solid white;">
+          <div class="rounded-top text-white d-flex flex-row"
+            style="background-color: #000; height:200px; align-items: center;">
+            <div class="ms-4 mt-2 ml-3 d-flex flex-column" style="width: 200px;">
+              <img src="{{ user.profile.image.url }}" alt="Generic placeholder image"
+                class="img-fluid img-thumbnail mt-4 mb-2 profile-picture" style="max-width: 200px; max-height: 200px;">
             </div>
-            <div class="ms-5" style="margin-top: 130px; float:right;">
-              <h5>{{user.username}}</h5>
-              <p>New York</p>
+            <div class="ms-5" style="margin-top: 100px; float:right; text-indent: 200px; font-size: 30px;">
+              <h5 style="font-size: 30px;">{{user.username}}</h5>
+              <p><b>New York</b></p>
               <p>{{ user.userprofile.bio }}</p>
             </div>
           </div>
-          <div class="p-4 text-black" style="background-color: #f8f9fa;">
+          <div class="p-4 text-black" style="background-color: wheat;">
+            <button onclick="location.href=/updateProfile/" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+              style="z-index: 1; color: black; background-color: white;"><b>Edit Profile</b>
+            </button>
             <div class="d-flex justify-content-end text-center py-1">
               <div>
-                <p class="mb-1 h5">253</p>
+                <p class="mb-1 h5"><b>253</b></p>
                 <p class="small text-muted mb-0">Photos</p>
               </div>
               <div class="px-3">
-                <p class="mb-1 h5">1026</p>
+                <p class="mb-1 h5"><b>1026</b></p>
                 <p class="small text-muted mb-0">Followers</p>
               </div>
               <div>
-                <p class="mb-1 h5">478</p>
+                <p class="mb-1 h5"><b>478</b></p>
                 <p class="small text-muted mb-0">Following</p>
               </div>
             </div>
           </div>
-          <div class="card-body p-4 text-black">
+          <div class="card-body p-4 text-black" style="background-color: wheat;">
             <div class="mb-5">
-              <p class="lead fw-normal mb-1">About</p>
-              <div class="p-4" style="background-color: #f8f9fa;">
+              <p class="lead fw-normal mb-1"><b>About</b></p>
+              <div class="p-4" style="background-color: wheat;">
                 {{ user.profile.bio }}
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <p class="lead fw-normal mb-0">Recent Recipe</p>
+              <p class="lead fw-normal mb-0"><b>Recent Recipe</b></p>
               <p class="mb-0"><a href="/recipes" class="card-img-top" class="text-muted">Show all</a></p>
-              </div>
-              <div class="Cook Book">
-                <div class="row row-cols-2">
+            </div>
+            <div class="Cook Book">
+              <div class="row row-cols-2">
                 {% for recipe in recipe_obj %}
-                 <div class="col-lg-3">
-                <img src="{{ recipe.Upload_Image.url }}" alt="image 2" class="img-thumbnail">
-                <div class="col mb-5">
+                <div class="col-lg-3">
+                  <img src="{{ recipe.Upload_Image.url }}" alt="image 2" class="img-thumbnail">
+                  <div class="col mb-5">
                     <b>{{ recipe.Create_RecipeName }}</b>
                   </div>
                 </div>
               </div>
             </div>
-                {% endfor %}
-                <h5 class="card-title"><b>{{ recipe.Create_RecipeName }}</b></h5>
-            </div>
+            {% endfor %}
+            <h5 class="card-title"><b>{{ recipe.Create_RecipeName }}</b></h5>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </section>
