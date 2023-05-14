@@ -6,28 +6,169 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search Recipes</title>
-    {% include 'bootstrap.html' %}
+    {% include 'head.html' %}
   </head>
+
+  <style>
+    body {
+      background-image: url("{% static 'boards.jpg' %}");
+      background-repeat: repeat;
+      background-size: auto;
+      overflow-y: scroll;
+      height: 100%;
+    }
+
+    .form-wrapper {
+      margin-top: 20;
+      margin: auto;
+      margin-top: 5%;
+      background-color: lightblue;
+      border: 1px solid #0a0a0a;
+      border-radius: 5px;
+      width: 500px;
+      height: 400px;
+      display: flex;
+      align-self: center;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      margin: auto;
+      background-color: lightblue;
+      border: 1px solid #0a0a0a;
+      border-radius: 10px;
+      width: 800px;
+      height: 150px;
+      display: flex;
+      align-self: center;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
   <body>
     {% include 'nav.html' %}
-    <form method="post">
-      {%csrf_token%}
-      <table>
-        {{ form_data.as_table }}
-        <tr>
-          <td>
-            <input type="Submit" class="btn btn-info" value="Search" \ />
-          </td>
-        </tr>
-      </table>
-    </form>
-    <ul>
-      <li>{{ Recipe_Name }}</li>
-      <li>{{Ingrediants}}</li>
-      <li>{{Meal_Type}}</li>
-      <li>{{Diet}}</li>
-      <li>{{Calories}}</li>
-      <li>{{Time}}</li>
-    </ul>
+    <h1
+      class="text-center"
+      style="
+        color: white;
+        font-size: 75px;
+        text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+      "
+    >
+      Search for a Recipe!
+    </h1>
+    <div class="container">
+      <div class="transparent">
+        <div class="form-wrapper">
+          <form method="post">
+            {%csrf_token%}
+            <table>
+              {{ form_data.as_table }}
+              <tr>
+                <td>
+                  <input type="Submit" class="btn btn-info" value="Search" />
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+        {% if num_results %}
+        <h3 class="text-center" style="color: white; font-size: 40px">
+          <b>Found {{ num_results }} results!</b>
+        </h3>
+        <table>
+          {% for item in parsed_data %}
+          <div class="card mb-3 result-box">
+            <div class="card-header">{{ item.label }}</div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <h5 class="card-title">Diet Labels</h5>
+                  <div class="row">
+                    <div class="col">
+                      <ul class="list-unstyled">
+                        {% for i in item.dietlabels %}
+                        <li>{{ i }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h5 class="card-title">Health Labels</h5>
+                  <ul>
+                    {% for i in item.healthLabels %}
+                    <li>{{ i }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="col-md-4">
+                  <h5 class="card-title">Cautions</h5>
+                  <div class="row">
+                    <div class="col">
+                      <ul class="list-unstyled">
+                        {% for i in item.cautions %}
+                        <li>{{ i }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <h5 class="card-title">Ingredients</h5>
+                  <ul>
+                    {% for i in item.ingredients %}
+                    <li>{{ i }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="col-md-4">
+                  <h5 class="card-title">Meal Type</h5>
+                  <div class="row">
+                    <div class="col">
+                      <ul class="list-unstyled">
+                        {% for i in item.mealType %}
+                        <li>{{ i }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h5 class="card-title">Dish Type</h5>
+                  <div class="row">
+                    <div class="col">
+                      <ul class="list-unstyled">
+                        {% for i in item.dishType %}
+                        <li>{{ i }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <a
+                    target="_blank"
+                    href="{{ item.instructionLink }}"
+                    class="btn btn-primary"
+                    >Instructions Link</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </table>
+        {% endif %}
+      </div>
+    </div>
   </body>
 </html>
