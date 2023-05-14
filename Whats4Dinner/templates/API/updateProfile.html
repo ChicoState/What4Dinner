@@ -3,6 +3,16 @@
   {% load static %}
   {% include 'head.html' %}
 </head>
+<style>
+body {
+  background-image: url("{% static 'profileBack.jpg' %}");
+  background-repeat: repeat;
+  background-size: cover;
+  overflow-y: scroll;
+  height: 100%;
+}
+</style>
+<body>
 <body>
   {% include 'nav.html' %}
   <div class="container">

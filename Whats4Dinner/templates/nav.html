@@ -1,14 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/">W4D</a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarText"
-    aria-controls="navbarText"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
@@ -17,36 +10,33 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="/about/">About</a>
       </li>
+      <a class="nav-link" href="/search/">Search Recipes</a>
+      </li>
       <li class="nav-item">
-        <a class="nav-link" href="/search/">Search Recipes</a>
+        <a class="nav-link" href="/create/">Create Recipes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/recipes">Recipe List</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/userprofile/">Profile</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/updateProfile/"> Edit Profile</a>
-      </li>
-    </ul>
-    <li>
       {% if user.is_authenticated %}
-        <li>
-          <a class="nav-link" href="/logout/">Logout</a>
-        </li>
-        {% else %}
-        <li>
-          <a class="nav-link" href="/login/">Login</a>
-        </li>
-        {% endif %}
+      <li>
+        <a class="nav-link" href="/logout/">Logout</a>
+      </li>
+      {% else %}
+      <li>
+        <a class="nav-link" href="/login/">Login</a>
+      </li>
+      {% endif %}
+    </ul>
     <span class="navbar-text">
-      <a
-        class="nav-link"
-        rel="noreferrer noopener"
-        target="_blank"
-        href="https://github.com/ChicoState/What4Dinner/"
-        >Link to this project on GitHub</a
-      >
+      <a class="nav-link" rel="noreferrer noopener" target="_blank"
+        href="https://github.com/ChicoState/What4Dinner/">Link to this project on GitHub</a>
     </span>
   </div>
 </nav>
