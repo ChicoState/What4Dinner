@@ -76,14 +76,13 @@ def parse_api_data(data):
 
         # Some search queries return results that do not contain a "dishType" key,
         # If that happens, just set the key to "N/A" so it can still be rendered
-        # correctly on the front end
+        # correctly on the front end.
         try:
             tmp["dishType"] = item["recipe"]["dishType"]
         except:
             tmp["dishType"] = "N/A"
         tmp["instructionLink"] = item["recipe"]["url"]
-        # tmp["shareable_link"] = item["recipe"]["shareAs"]  # Added line for shareable link
-
+        tmp["thumbnail"] = item["recipe"]["images"]["SMALL"]["url"]
         parsed_data.append(tmp)
     return parsed_data
 
