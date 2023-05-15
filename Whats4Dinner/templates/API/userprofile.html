@@ -42,7 +42,7 @@
 
 <h1 class="text-center" style="color: white; font-size: 75px; text-shadow: -2px 0 black,
   0 2px black, 2px 0 black, 0 -2px black;">Profile!</h1>
-<section class="h-100 gradient-custom-2">
+<section class="h-200 gradient-custom-2">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-lg-9 col-xl-7">
@@ -55,7 +55,7 @@
             </div>
             <div class="ms-5" style="margin-top: 100px; float:right; text-indent: 200px; font-size: 30px;">
               <h5 style="font-size: 30px;">{{user.username}}</h5>
-              <p><b>New York</b></p>
+
               <p>{{ user.userprofile.bio }}</p>
             </div>
           </div>
@@ -65,16 +65,8 @@
             </button>
             <div class="d-flex justify-content-end text-center py-1">
               <div>
-                <p class="mb-1 h5"><b>253</b></p>
-                <p class="small text-muted mb-0">Photos</p>
-              </div>
-              <div class="px-3">
-                <p class="mb-1 h5"><b>1026</b></p>
-                <p class="small text-muted mb-0">Followers</p>
-              </div>
-              <div>
-                <p class="mb-1 h5"><b>478</b></p>
-                <p class="small text-muted mb-0">Following</p>
+                <p class="mb-1 h5"><b>{{recipe_count }}</b></p>
+                <p class="small text-muted mb-0">Recipe</p>
               </div>
             </div>
           </div>
@@ -89,18 +81,14 @@
               <p class="lead fw-normal mb-0"><b>Recent Recipe</b></p>
               <p class="mb-0"><a href="/recipes" class="card-img-top" class="text-muted">Show all</a></p>
             </div>
-            <div class="Cook Book">
-              <div class="row row-cols-2">
-                {% for recipe in recipe_obj %}
-                <div class="col-lg-3">
-                  <img src="{{ recipe.Upload_Image.url }}" alt="image 2" class="img-thumbnail">
-                  <div class="col mb-5">
-                    <b>{{ recipe.Create_RecipeName }}</b>
-                  </div>
-                </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+              {% for recipe in recipe_obj %}
+              <div class="col mb-5">
+                  <img src="{{ recipe.Upload_Image.url }}"  alt="Recipe Image" class="w-100 rounded-4">
+                    <h5 class="card-title"><b>{{ recipe.Create_RecipeName }}</b></h5>
               </div>
+              {% endfor %}
             </div>
-            {% endfor %}
             <h5 class="card-title"><b>{{ recipe.Create_RecipeName }}</b></h5>
           </div>
         </div>

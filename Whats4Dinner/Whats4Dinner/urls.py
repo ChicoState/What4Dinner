@@ -31,6 +31,6 @@ urlpatterns = [
     path('updateProfile/', api_views.update_profile, name="updateProfile"),
     path('logout/', api_views.user_logout, name="logout"),
     path('create/', api_views.create, name="create"),
-    path('recipes/', api_views.recipe_details, name = 'recipes'),
+    path('recipes/', api_views.recipe_details, name='recipes'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
