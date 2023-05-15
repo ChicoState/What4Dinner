@@ -55,8 +55,9 @@ def userprofile(request):
     User profile view
     '''
     recipe_obj = CreateRecipe.objects.all()
+    recipe_count = CreateRecipe.objects.all().count()
     return render(request, "API/userprofile.html",
-                  {'recipe_obj': recipe_obj})
+                  {'recipe_obj': recipe_obj, 'recipe_count': recipe_count})
 
 
 @login_required(login_url='/login/')
@@ -187,7 +188,7 @@ def user_login(request):
 
 
 @login_required(login_url='/login/')
-def update_profile(request):
+def updateProfile(request):
     '''
     update user profile page view
     '''

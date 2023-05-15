@@ -100,6 +100,7 @@ class CreateRecipe(models.Model):
         null=False, max_length=10000, default='')
     Upload_Image = models.ImageField(
         null=True, blank=True, upload_to="Uploads/")
+    Create_RecipeCount = models.IntegerField(null=True, default=0)
 
 
 class RecomendedRecipes(models.Model):
