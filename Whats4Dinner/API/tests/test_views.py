@@ -98,15 +98,11 @@ class SignupTestCase(TestCase):
             'password': 'testpassword',
             # Include other required fields for the SignUpForm
         }
-        
         form = SignUpForm(data=form_data)
         self.assertTrue(form.is_valid())
-        
         response = self.client.post('/signup/', form_data)
         self.assertEqual(response.status_code, 302)
-        
         user = User.objects.get(username='testuser')
         self.assertIsNotNone(user)
-        
         profile = Profile.objects.get(user=user)
         self.assertIsNotNone(profile)
