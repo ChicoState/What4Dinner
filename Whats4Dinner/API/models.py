@@ -1,12 +1,10 @@
 '''
 Model declarations
 '''
-from PIL import Image
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models.signals import post_save
 from PIL import Image
-
 
 MEAL_TYPE = [
     ("", "None"),
@@ -102,6 +100,7 @@ class CreateRecipe(models.Model):
         null=False, max_length=10000, default='')
     Upload_Image = models.ImageField(
         null=True, blank=True, upload_to="Uploads/")
+    Create_RecipeCount = models.IntegerField(null=True, default=0)
 
 
 class RecomendedRecipes(models.Model):

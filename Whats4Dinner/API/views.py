@@ -54,8 +54,9 @@ def userprofile(request):
     User profile view
     '''
     recipe_obj = CreateRecipe.objects.all()
+    recipe_count = CreateRecipe.objects.all().count()
     return render(request, "API/userprofile.html",
-                  {'recipe_obj': recipe_obj})
+                  {'recipe_obj': recipe_obj, 'recipe_count': recipe_count})
 
 
 @login_required(login_url='/login/')
@@ -162,6 +163,7 @@ def signup(request):
     page_data = {"signup_form": signup_form}
     return render(request, "API/signup.html", page_data)
 
+
 def user_login(request):
     '''
     user login page view
@@ -193,13 +195,13 @@ def update_profile(request):
     if request.method == 'POST':
         updateuser = UpdateUserForm(request.POST, instance=request.user)
         updateprofile = UpdateProfileForm(request.POST,
-            request.FILES, instance=request.user.profile)
+                                          request.FILES, instance=request.user.profile)
 
         if updateuser.is_valid() and updateprofile.is_valid():
             updateuser.save()
             updateprofile.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect(userprofile) # Redirect back to profile page
+            return redirect(userprofile)  # Redirect back to profile page
 
     updateuser = UpdateUserForm(instance=request.user)
     updateprofile = UpdateProfileForm(instance=request.user.profile)
