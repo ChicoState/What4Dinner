@@ -2,20 +2,23 @@
 All views for the website
 '''
 import random
-from API.form import (LoginForm, RecipeSearchForm, SignUpForm,
-                      UpdateProfileForm, UpdateUserForm, RecipeCreateForm)
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from .models import CreateRecipe, RecomendedRecipes
-from .API_data import get_api_data, parse_api_data
 
+from API.form import (LoginForm, RecipeCreateForm, RecipeSearchForm,
+                      SignUpForm, UpdateProfileForm, UpdateUserForm)
+
+from .API_data import get_api_data, parse_api_data
+from .models import CreateRecipe, RecomendedRecipes
 
 # from django.contrib.auth.forms import SignUp
 
 # Create your views here.
+
 
 @login_required(login_url='/login/')
 def user_logout(request):
@@ -25,8 +28,8 @@ def user_logout(request):
     logout(request)
     return redirect("/")
 
-def home(request):
 
+def home(request):
     '''
     Random Recipe View.
     '''
@@ -34,15 +37,16 @@ def home(request):
     if not recipes:
         message = "There are no recipes to display."
         return render(request, 'API/home.html', {'message': message})
-    else:
-        recipe = random.choice(recipes)
-        return render(request, 'API/home.html', {'recipe': recipe})
+    recipe = random.choice(recipes)
+    return render(request, 'API/home.html', {'recipe': recipe})
+
 
 def about(request):
     '''
     About page view
     '''
     return render(request, "API/about.html")
+
 
 @login_required(login_url='/login/')
 def userprofile(request):
@@ -51,7 +55,7 @@ def userprofile(request):
     '''
     recipe_obj = CreateRecipe.objects.all()
     return render(request, "API/userprofile.html",
-     {'recipe_obj': recipe_obj})
+                  {'recipe_obj': recipe_obj})
 
 
 @login_required(login_url='/login/')
@@ -89,11 +93,12 @@ def search(request):
             "form_data": RecipeSearchForm
         }
         return render(request, "API/search.html", context)
-
     context = {
         "form_data": RecipeSearchForm
     }
     return render(request, "API/search.html", context)
+
+
 @login_required(login_url='/login/')
 def create(request):
     '''
@@ -130,7 +135,7 @@ def create(request):
                 "message": "Recipe created successfully!",
             }
 
-             # Add success message to messages framework
+            # Add success message to messages framework
             messages.success(request, 'Recipe created successfully!')
 
             return render(request, "API/create.html", context)
@@ -139,29 +144,29 @@ def create(request):
     # If it's a GET request, render the form
     return render(request, "API/create.html", {'form': RecipeCreateForm()})
 
+
 def signup(request):
     '''
     signup page views
     '''
-    if (request.method == "POST"):
+    if request.method == "POST":
         signup_form = SignUpForm(request.POST)
-        if (signup_form.is_valid()):
+        if signup_form.is_valid():
             user = signup_form.save()
             user.set_password(user.password)
             user.save()
             return redirect("/")
-        else:
-            page_data = { "signup_form": signup_form }
-            return render(request, "API/signup.html", page_data)
-    else:
-        signup_form = SignUpForm()
-        page_data = { "signup_form": signup_form }
+        page_data = {"signup_form": signup_form}
         return render(request, "API/signup.html", page_data)
+    signup_form = SignUpForm()
+    page_data = {"signup_form": signup_form}
+    return render(request, "API/signup.html", page_data)
+
 def user_login(request):
     '''
     user login page view
     '''
-    if(request.method == 'POST'):
+    if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = login_form.cleaned_data["username"]
@@ -169,45 +174,43 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-                    login(request,user)
+                    login(request, user)
                     return redirect("/")
-                else:
-                    return HttpResponseRedirect("Your account is not setup.")
-            else:
-                print("Someone tried to login and failed.")
-                print("They used username: {} and password: {}".format(username,password))
-                return render(request, 'API/login.html', {"login_form": LoginForm})
-        else:
-            return render(request, "API/login.html", {"login_form": LoginForm})
-    else:
+                return HttpResponseRedirect("Your account is not setup.")
+            print("Someone tried to login and failed.")
+
+            print(f"They used username: {username} and password: {password}")
+            return render(request, 'API/login.html', {"login_form": LoginForm})
         return render(request, "API/login.html", {"login_form": LoginForm})
+    return render(request, "API/login.html", {"login_form": LoginForm})
+
 
 @login_required(login_url='/login/')
-def updateProfile(request):
+def update_profile(request):
     '''
     update user profile page view
     '''
     if request.method == 'POST':
-        updateUser = UpdateUserForm(request.POST, instance=request.user)
-        updateProfile = UpdateProfileForm(request.POST,
+        updateuser = UpdateUserForm(request.POST, instance=request.user)
+        updateprofile = UpdateProfileForm(request.POST,
             request.FILES, instance=request.user.profile)
 
-        if updateUser.is_valid() and updateProfile.is_valid():
-            updateUser.save()
-            updateProfile.save()
+        if updateuser.is_valid() and updateprofile.is_valid():
+            updateuser.save()
+            updateprofile.save()
             messages.success(request, f'Your account has been updated!')
             return redirect(userprofile) # Redirect back to profile page
 
-    else:
-        updateUser = UpdateUserForm(instance=request.user)
-        updateProfile = UpdateProfileForm(instance=request.user.profile)
+    updateuser = UpdateUserForm(instance=request.user)
+    updateprofile = UpdateProfileForm(instance=request.user.profile)
 
     context = {
-        'updateUser': updateUser,
-        'updateProfile': updateProfile
+        'updateUser': updateuser,
+        'updateProfile': updateprofile
     }
 
     return render(request, 'API/updateProfile.html', context)
+
 
 @login_required(login_url='/login/')
 def recipe_details(request):
@@ -215,5 +218,5 @@ def recipe_details(request):
     Created Recipe View.
     '''
     recipe_obj = CreateRecipe.objects.all()
-    return render (request, 'API/recipes.html',
-    {'recipe_obj': recipe_obj})
+    return render(request, 'API/recipes.html',
+                  {'recipe_obj': recipe_obj})
