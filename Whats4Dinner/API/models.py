@@ -1,11 +1,10 @@
 '''
 Model declarations
 '''
-from django.db import models
-from PIL import Image
 from django.contrib.auth.models import User
-from django.db.models import Model
+from django.db import models
 from django.db.models.signals import post_save
+from PIL import Image
 
 MEAL_TYPE = [
     ("", "None"),
@@ -82,26 +81,34 @@ class RecipeSearch(models.Model):
     # Added field for shareable link
     shareable_link = models.URLField(max_length=200, unique=True)
 
+
 class CreateRecipe(models.Model):
     '''
     Recpe create model declaration
     '''
-    Create_RecipeName = models.CharField(null=False,max_length=50)
-    Create_Ingrediants=models.CharField(null=False,max_length=300)
-    Create_Meal_Type=models.CharField(choices=MEAL_TYPE, max_length=20, null=False)
-    Create_Health_Type=models.CharField(choices=HEALTH_TYPE, max_length=40, null=False)
-    Create_Diet=models.CharField(choices=DIET_TYPE, max_length=40, null=False)
-    Create_Calories=models.CharField(null=False, max_length=50)
-    Create_Time=models.CharField(null=False, max_length=50)
-    Create_Instruct = models.CharField(null=False, max_length=10000, default='')
-    Upload_Image=models.ImageField(null=True, blank=True, upload_to="Uploads/")
+    Create_RecipeName = models.CharField(null=False, max_length=50)
+    Create_Ingrediants = models.CharField(null=False, max_length=300)
+    Create_Meal_Type = models.CharField(
+        choices=MEAL_TYPE, max_length=20, null=False)
+    Create_Health_Type = models.CharField(
+        choices=HEALTH_TYPE, max_length=40, null=False)
+    Create_Diet = models.CharField(
+        choices=DIET_TYPE, max_length=40, null=False)
+    Create_Calories = models.CharField(null=False, max_length=50)
+    Create_Time = models.CharField(null=False, max_length=50)
+    Create_Instruct = models.CharField(
+        null=False, max_length=10000, default='')
+    Upload_Image = models.ImageField(
+        null=True, blank=True, upload_to="Uploads/")
+
 
 class RecomendedRecipes(models.Model):
     '''
     Random Recipe create model declaration
     '''
-    Rec_Recipe_Name = models.CharField(null=False,max_length=50)
+    Rec_Recipe_Name = models.CharField(null=False, max_length=50)
     Rec_URL = models.URLField()
+
 
 class Profile(models.Model):
     '''
@@ -109,7 +116,7 @@ class Profile(models.Model):
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     follows = models.ManyToManyField("self", related_name="followed_by",
-        symmetrical=False, blank=True)
+                                     symmetrical=False, blank=True)
     bio = models.TextField(null=False)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
@@ -117,6 +124,7 @@ class Profile(models.Model):
         return self.user.username
 
     def save(self):
+        '''Save the image'''
         super().save()
 
         img = Image.open(self.image.path)
@@ -126,9 +134,12 @@ class Profile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+
 def create_profile(sender, instance, created, **kwargs):
+    '''Creates a user profile'''
     if created:
         user_profile = Profile(user=instance)
         user_profile.save()
+
 
 post_save.connect(create_profile, sender=User)
