@@ -15,14 +15,14 @@ class RecipeSearchForm(forms.Form):
     Recipe search form fields
     '''
     Recipe_Name = forms.CharField(widget=forms.TextInput())
-    Ingrediants = forms.CharField(widget=forms.TextInput())
+    Ingrediants = forms.CharField(widget=forms.TextInput(), required=False)
     Meal_Type = forms.CharField(
-        label='Meal Type', widget=forms.Select(choices=MEAL_TYPE))
+        label='Meal Type', widget=forms.Select(choices=MEAL_TYPE), required=False)
     # Health_type=forms.CharField(max_length=40)
     Diet = forms.CharField(
-        label='Diet Type', widget=forms.Select(choices=DIET_TYPE))
-    Calories = forms.IntegerField(widget=forms.NumberInput())
-    Time = forms.IntegerField(widget=forms.NumberInput())
+        label='Diet Type', widget=forms.Select(choices=DIET_TYPE), required=False)
+    Calories = forms.IntegerField(widget=forms.NumberInput(), required=False)
+    Time = forms.IntegerField(widget=forms.NumberInput(), required=False)
     Number_Of_Ingredients = forms.CharField(
         widget=forms.TextInput(), required=False)
     Meal_Type = forms.CharField(

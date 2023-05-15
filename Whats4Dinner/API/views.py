@@ -37,9 +37,8 @@ def home(request):
     if not recipes:
         message = "There are no recipes to display."
         return render(request, 'API/home.html', {'message': message})
-    else:
-        recipe = random.choice(recipes)
-        return render(request, 'API/home.html', {'recipe': recipe})
+    recipe = random.choice(recipes)
+    return render(request, 'API/home.html', {'recipe': recipe})
 
 
 def about(request):
@@ -164,7 +163,6 @@ def signup(request):
     page_data = {"signup_form": signup_form}
     return render(request, "API/signup.html", page_data)
 
-
 def user_login(request):
     '''
     user login page view
@@ -181,6 +179,7 @@ def user_login(request):
                     return redirect("/")
                 return HttpResponseRedirect("Your account is not setup.")
             print("Someone tried to login and failed.")
+
             print(f"They used username: {username} and password: {password}")
             return render(request, 'API/login.html', {"login_form": LoginForm})
         return render(request, "API/login.html", {"login_form": LoginForm})
@@ -193,23 +192,22 @@ def updateProfile(request):
     update user profile page view
     '''
     if request.method == 'POST':
-        update_user = UpdateUserForm(request.POST, instance=request.user)
-        update_user_profile = UpdateProfileForm(request.POST,
-                                                request.FILES, instance=request.user.profile)
+        updateuser = UpdateUserForm(request.POST, instance=request.user)
+        updateprofile = UpdateProfileForm(request.POST,
+            request.FILES, instance=request.user.profile)
 
-        if update_user.is_valid() and update_user_profile.is_valid():
-            update_user.save()
-            update_user_profile.save()
-            messages.success(request, 'Your account has been updated!')
-            return redirect(userprofile)  # Redirect back to profile page
+        if updateuser.is_valid() and updateprofile.is_valid():
+            updateuser.save()
+            updateprofile.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect(userprofile) # Redirect back to profile page
 
-    else:
-        update_user = UpdateUserForm(instance=request.user)
-        update_user_profile = UpdateProfileForm(instance=request.user.profile)
+    updateuser = UpdateUserForm(instance=request.user)
+    updateprofile = UpdateProfileForm(instance=request.user.profile)
 
     context = {
-        'updateUser': update_user,
-        'updateProfile': update_user_profile
+        'updateUser': updateuser,
+        'updateProfile': updateprofile
     }
 
     return render(request, 'API/updateProfile.html', context)

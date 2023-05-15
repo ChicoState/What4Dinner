@@ -57,14 +57,9 @@ class UrlTestUnauthenticated(TestCase):
         response = self.client.get(reverse("userProfile"))
         self.assertEqual(response.status_code, 302)
 
-    def test_url_exists_at_correct_location_test_editprofile_url(self):
-        """Test access to the editprofile url"""
-        response = self.client.get(reverse("editProfile"))
-        self.assertEqual(response.status_code, 302)
-
-    def test_url_exists_at_correct_location_test_profile_url(self):
-        """Test access to the profile url"""
-        response = self.client.get(reverse("profile"))
+    def test_url_exists_at_correct_location_test_updateprofile_url(self):
+        """Test access to the updateprofile url"""
+        response = self.client.get(reverse("updateProfile"))
         self.assertEqual(response.status_code, 302)
 
     def test_url_exists_at_correct_location_test_logout_url(self):
@@ -103,13 +98,13 @@ class UrlTestUnauthenticated(TestCase):
         response = self.client.get(reverse("userProfile"))
         self.assertTemplateNotUsed(response, "API/userprofile.html")
 
-    def test_editprofile_redirect_for_unauthenticated_user(self):
+    def test_updateprofile_redirect_for_unauthenticated_user(self):
         """
         Testign that the login template is used when user tries to
         access the edit profile page but is not authenticated
         """
-        response = self.client.get(reverse("editProfile"))
-        self.assertTemplateNotUsed(response, "API/editProfile.html")
+        response = self.client.get(reverse("updateProfile"))
+        self.assertTemplateNotUsed(response, "API/updateProfile.html")
 
     def test_url_exists_at_correct_location_test_create_url(self):
         """Test access to the create url"""
@@ -168,14 +163,9 @@ class UrlTestAuthenticated(TestCase):
         response = self.client.get(reverse("userProfile"))
         self.assertEqual(response.status_code, 200)
 
-    def test_url_exists_at_correct_location_test_editprofile_url(self):
-        """Test access to the editprofile url"""
-        response = self.client.get(reverse("editProfile"))
-        self.assertEqual(response.status_code, 200)
-
-    def test_url_exists_at_correct_location_test_profile_url(self):
-        """Test access to the profile url"""
-        response = self.client.get(reverse("profile"))
+    def test_url_exists_at_correct_location_test_updateprofile_url(self):
+        """Test access to the updateprofile url"""
+        response = self.client.get(reverse("updateProfile"))
         self.assertEqual(response.status_code, 200)
 
     def test_url_exists_at_correct_location_test_logout_url(self):
@@ -213,13 +203,13 @@ class UrlTestAuthenticated(TestCase):
         response = self.client.get(reverse("userProfile"))
         self.assertTemplateUsed(response, "API/userprofile.html")
 
-    def test_editprofile_redirect_for_unauthenticated_user(self):
+    def test_updateprofile_redirect_for_unauthenticated_user(self):
         """
         Testign that the login template is used when user tries to
         access the edit profile and is authenticated
         """
-        response = self.client.get(reverse("editProfile"))
-        self.assertTemplateUsed(response, "API/editProfile.html")
+        response = self.client.get(reverse("updateProfile"))
+        self.assertTemplateUsed(response, "API/updateProfile.html")
 
     def test_url_exists_at_correct_location_test_create_url(self):
         """Test access to the create url"""

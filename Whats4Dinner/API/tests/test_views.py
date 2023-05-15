@@ -9,8 +9,9 @@ from unittest.mock import patch
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from django.urls import reverse
-
-from API.models import RecomendedRecipes
+from django.contrib.auth import authenticate, login
+from API.models import RecomendedRecipes, Profile
+from API.form import SignUpForm, LoginForm
 
 # TESTS MUST START WITH THE WORD TEST(EXAMPLE)
 # def test_save_user_created_recipe(self):
@@ -84,3 +85,28 @@ class ViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'API/recipes.html')
         self.assertQuerysetEqual(response.context['recipe_obj'], [])
+
+class SignupTestCase(TestCase):
+    '''Class for Sign Up Test Views'''
+    def test_signup(self):
+        '''Testing Sign Up Form and View'''
+        form_data = {
+            'first_name': 'Test',
+            'last_name': 'User',
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'password': 'testpassword',
+            # Include other required fields for the SignUpForm
+        }
+        
+        form = SignUpForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        
+        response = self.client.post('/signup/', form_data)
+        self.assertEqual(response.status_code, 302)
+        
+        user = User.objects.get(username='testuser')
+        self.assertIsNotNone(user)
+        
+        profile = Profile.objects.get(user=user)
+        self.assertIsNotNone(profile)
